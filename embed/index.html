@@ -10,65 +10,67 @@
     html, body {
       width: 100%; height: 100%;
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: #fff;
+      background: #1a1a1a;
       overflow: hidden;
     }
 
     .card {
       position: relative;
       width: 100%; height: 100%;
-      display: flex;
-      flex-direction: column;
-      background: #fff;
       overflow: hidden;
+      background: #1a1a1a;
     }
 
-    /* Product image */
-    .card-image-wrap {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      background: #f8f9fa;
-      min-height: 0;
-    }
-
+    /* Full-bleed image */
     .card-image {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       display: block;
     }
 
-    .card-image-wrap.no-image::after {
+    .card.no-image::before {
       content: 'No image';
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 11px;
-      color: #bbb;
+      color: #666;
     }
 
-    /* Footer: make · model and short title */
-    .card-footer {
-      flex-shrink: 0;
-      padding: 7px 10px 6px;
-      background: #fff;
-      border-top: 1px solid #ececec;
+    /* Bottom gradient caption — always visible */
+    .card-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px 12px 10px;
+      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0) 100%);
+      pointer-events: none;
     }
 
     .card-make-model {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
-      color: #0c3b5e;
-      letter-spacing: 0.01em;
+      color: #aed47d;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .card-title {
-      font-size: 10px;
-      color: #666;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
       margin-top: 2px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.9);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -78,12 +80,12 @@
     .card-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(12, 59, 94, 0.94);
+      background: rgba(12, 59, 94, 0.93);
       color: #fff;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 14px 16px;
+      padding: 16px;
       opacity: 0;
       transition: opacity 0.18s ease;
       pointer-events: none;
@@ -94,11 +96,12 @@
     }
 
     .overlay-make-model {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       color: #aed47d;
       margin-bottom: 6px;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .overlay-title {
@@ -114,18 +117,16 @@
       color: rgba(255, 255, 255, 0.88);
       overflow: hidden;
       display: -webkit-box;
-      -webkit-line-clamp: 8;
+      -webkit-line-clamp: 9;
       -webkit-box-orient: vertical;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="card-image-wrap" id="imageWrap">
-      <img class="card-image" id="img" src="" alt=""
-           onerror="this.parentElement.classList.add('no-image'); this.style.display='none'">
-    </div>
-    <div class="card-footer">
+  <div class="card" id="card">
+    <img class="card-image" id="img" src="" alt=""
+         onerror="document.getElementById('card').classList.add('no-image'); this.style.display='none'">
+    <div class="card-caption">
       <div class="card-make-model" id="makeModel"></div>
       <div class="card-title"      id="titleEl"></div>
     </div>
@@ -150,14 +151,14 @@
       document.getElementById('img').src = image;
       document.getElementById('img').alt = title || makeModel;
     } else {
-      document.getElementById('imageWrap').classList.add('no-image');
+      document.getElementById('card').classList.add('no-image');
     }
 
-    document.getElementById('makeModel').textContent       = makeModel;
-    document.getElementById('titleEl').textContent         = title;
+    document.getElementById('makeModel').textContent        = makeModel;
+    document.getElementById('titleEl').textContent          = title;
     document.getElementById('overlayMakeModel').textContent = makeModel;
-    document.getElementById('overlayTitle').textContent    = title;
-    document.getElementById('overlayNotes').textContent    = notes;
+    document.getElementById('overlayTitle').textContent     = title;
+    document.getElementById('overlayNotes').textContent     = notes;
   </script>
 </body>
 </html>
