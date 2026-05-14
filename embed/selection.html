@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<!--
+  Crafted Earth — Selection page (anonymous, GitHub-Pages-hosted)
+  Sister page to embed/index.html (gallery-card).
+
+  Reads all data from a single URL param `?d=<JSON>` (URI-encoded).
+  Approve buttons compose mailto:selections@craftedearth.com.
+
+  No backend, no auth, no cost.
+  Repo: ericspletzer/crafted-earth-product-images
+  Path: /embed/selection.html
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crafted Earth — Selection</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f4f3ef;
+      color: #1a1a1a;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .wrap { max-width: 880px; margin: 0 auto; padding: 24px 16px 64px; }
+
+    /* Header */
+    header.top {
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .brand {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 4px 0 0;
+      letter-spacing: -0.01em;
+    }
+    .meta {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #4a4a4a;
+    }
+    .meta span + span::before { content: " \00b7 "; color: #b0b0b0; }
+
+    /* Header-level secondary action (Return with comments) */
+    .top-actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-ghost {
+      display: inline-block;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: #0a304e;
+      background: transparent;
+      border: 1px solid #0a304e;
+      padding: 8px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { background: #0a304e; color: #fff; }
+    .top-actions-hint {
+      font-size: 12px;
+      color: #6b6b6b;
+    }
+
+    /* Section labels */
+    .section-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin: 32px 0 12px;
+      border-bottom: 1px solid #d4d4d4;
+      padding-bottom: 8px;
+    }
+
+    /* Cards */
+    .card {
+      background: #fff;
+      border: 1px solid #d4d4d4;
+      border-radius: 4px;
+      padding: 20px;
+      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 20px;
+    }
+    .card.primary { border-color: #0a304e; border-width: 2px; }
+
+    .card-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background: #fafaf8;
+      border: 1px solid #e8e8e6;
+      border-radius: 2px;
+    }
+    .card-image.no-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10.5px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+
+    .card-body { display: flex; flex-direction: column; gap: 8px; }
+    .card-title { font-size: 16px; font-weight: 600; margin: 0; color: #1a1a1a; }
+    .card-mfr { font-size: 13px; color: #6b6b6b; }
+    .card-attrs {
+      display: flex; flex-wrap: wrap;
+      gap: 12px;
+      font-size: 13px;
+      color: #4a4a4a;
+      margin: 4px 0;
+    }
+    .card-attrs strong { color: #1a1a1a; font-weight: 500; }
+
+    .badge {
+      display: inline-block;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+      background: #0a304e;
+      color: #fff;
+      margin-right: 6px;
+    }
+    .badge.alt { background: #6b6b6b; }
+
+    .card-notes {
+      font-size: 13px;
+      color: #4a4a4a;
+      line-height: 1.5;
+      margin: 4px 0 8px;
+    }
+
+    .card-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      border: 1px solid #0a304e;
+      background: #0a304e;
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 10px 18px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s, background 0.15s;
+    }
+    .btn:hover { background: #06243d; }
+    .link-out {
+      font-size: 12px;
+      color: #6b6b6b;
+      text-decoration: none;
+      border-bottom: 1px solid #d4d4d4;
+    }
+    .link-out:hover { color: #1a1a1a; border-color: #1a1a1a; }
+
+    /* Footer */
+    footer.bot {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid #d4d4d4;
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      text-align: center;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .card { grid-template-columns: 1fr; }
+      .card-image { max-width: 240px; margin: 0 auto; }
+      h1 { font-size: 19px; }
+    }
+
+    /* Empty-state */
+    .empty {
+      padding: 60px 20px;
+      text-align: center;
+      color: #6b6b6b;
+    }
+    .empty h2 { font-size: 18px; margin-bottom: 8px; color: #1a1a1a; }
+    .empty p { font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="root">
+    <div class="empty">
+      <h2>Loading selection&hellip;</h2>
+      <p>If you see this for more than a moment, the link may be incomplete. Contact eric@craftedearth.com.</p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // ---- Demo fallback (used when no ?d= param is given) ------------------
+      const DEMO = {
+        tm: "SS08",
+        ti: "TOILET PAPER HOLDER",
+        pn: "38 Bayo Vista",
+        ar: "En Suite Bathroom",
+        qt: 2, un: "EA", ld: 10,
+        items: [
+          {
+            id: 163, kind: "primary",
+            img: "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/649-20260512160808.png",
+            make: "Kohler", mod: "K-27064", ti: "Occasion Vertical Toilet Paper Holder",
+            no: "The Occasion Vertical Toilet Paper Holder adds glamour and function to your bathroom with vintage Hollywood-inspired design. Available in multiple finishes and makes an elegant accent piece for any bathroom space.",
+            fi: "Matte Black", co: "Occasion",
+            url: "https://www.kohler.com/en/products/bathroom-accessories/shop-bathroom-accessories/occasion-vertical-toilet-paper-holder-27064?skuId=27064-BL"
+          },
+          {
+            id: 283, kind: "alt",
+            img: "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/650-20260512160908.jpg",
+            make: "Kohler", mod: "K-27065-BL", ti: "Occasion Pivoting Toilet Paper Holder",
+            no: "The Occasion Pivoting toilet paper holder adds glamour and function with vintage Hollywood-inspired accents. Available in multiple finishes including Matte Black, Polished Chrome, and various brushed metal options.",
+            fi: "Matte Black", co: "Occasion",
+            url: "https://www.kohler.com/en/products/bathroom-accessories/shop-bathroom-accessories/occasion-pivoting-toilet-paper-holder-27065?skuId=27065-BL"
+          },
+          {
+            id: 284, kind: "alt",
+            img: "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/651-20260512161040.jpg",
+            make: "Kohler", mod: "K-27128-BL", ti: "Toilet Paper Holder With Tray",
+            no: "The Occasion toilet paper holder with tray combines vintage Hollywood-inspired glamour with practical function. Features a matte black finish with brushed moderne brass accents, adding an elegant accent to any bathroom.",
+            fi: "Matte Black", co: "Occasion",
+            url: "https://www.kohler.com/en/products/bathroom-accessories/shop-bathroom-accessories/occasion-toilet-paper-holder-with-tray-27128?skuId=27128-BL"
+          }
+        ]
+      };
+
+      // ---- Parse single ?d=<JSON> URL parameter -----------------------------
+      const params = new URLSearchParams(location.search);
+      const raw = params.get('d');
+
+      let data;
+      if (!raw) {
+        data = DEMO;
+        render(data);
+        return;
+      }
+
+      try {
+        data = JSON.parse(raw);
+      } catch (e) {
+        renderEmpty('Could not read selection data. The link may be corrupted.');
+        return;
+      }
+
+      if (!data.items || data.items.length === 0) {
+        renderEmpty('Selection contains no items.');
+        return;
+      }
+
+      render(data);
+
+      // ---- Renderers --------------------------------------------------------
+      function renderEmpty(msg) {
+        document.getElementById('root').innerHTML =
+          '<div class="empty"><h2>Selection unavailable</h2><p>' + escapeHtml(msg) + '</p></div>';
+      }
+
+      function render(d) {
+        const root = document.getElementById('root');
+        const primary = d.items.find(i => i.kind === 'primary') || d.items[0];
+        const alts = d.items.filter(i => i !== primary);
+
+        const meta = [d.pn, d.ar, fmtQty(d.qt, d.un), fmtLead(d.ld)]
+          .filter(Boolean)
+          .map(s => '<span>' + escapeHtml(s) + '</span>')
+          .join('');
+
+        let html = '';
+        html += '<header class="top">';
+        html += '  <div class="brand">Crafted Earth &middot; Selection</div>';
+        html += '  <h1>' + escapeHtml((d.tm ? d.tm + ' · ' : '') + (d.ti || '')) + '</h1>';
+        if (meta) html += '  <div class="meta">' + meta + '</div>';
+        html += '  <div class="top-actions">';
+        html += '    <a class="btn-ghost" href="' + buildReturnMailto(d) + '">Return with comments</a>';
+        html += '    <span class="top-actions-hint">Questions, change requests, or anything that&rsquo;s not a simple approve.</span>';
+        html += '  </div>';
+        html += '</header>';
+
+        html += '<div class="section-label">Primary Selection</div>';
+        html += cardHtml(primary, true, d);
+
+        if (alts.length > 0) {
+          html += '<div class="section-label">Alternatives</div>';
+          alts.forEach(a => { html += cardHtml(a, false, d); });
+        }
+
+        html += '<footer class="bot">';
+        html += '  <div>Crafted Earth, Inc. &middot; San Rafael, CA &middot; CSL 1015145 &middot; PE C82156</div>';
+        html += '  <div style="margin-top:6px;">Approvals are sent by email and recorded with timestamp.</div>';
+        html += '</footer>';
+
+        root.innerHTML = html;
+      }
+
+      function cardHtml(item, isPrimary, d) {
+        const cls = 'card' + (isPrimary ? ' primary' : '');
+        const badge = isPrimary
+          ? '<span class="badge">Primary</span>'
+          : '<span class="badge alt">Alternative</span>';
+        const mfrModel = [item.make, item.mod ? 'Model ' + item.mod : null].filter(Boolean).join(' · ');
+        const attrs = [];
+        if (item.fi) attrs.push('<span><strong>Finish:</strong> ' + escapeHtml(item.fi) + '</span>');
+        if (item.co) attrs.push('<span><strong>Collection:</strong> ' + escapeHtml(item.co) + '</span>');
+        const imgHtml = item.img
+          ? '<img class="card-image" src="' + escapeAttr(item.img) + '" alt="' + escapeAttr(item.ti || '') + '" onerror="this.classList.add(\'no-image\');this.removeAttribute(\'src\');" />'
+          : '<div class="card-image no-image">No image</div>';
+        const specLink = item.url
+          ? '<a class="link-out" href="' + escapeAttr(item.url) + '" target="_blank" rel="noopener noreferrer">View product spec</a>'
+          : '';
+
+        return [
+          '<div class="' + cls + '">',
+            imgHtml,
+            '<div class="card-body">',
+              '<div>' + badge + '</div>',
+              '<p class="card-title">' + escapeHtml(item.ti || '') + '</p>',
+              mfrModel ? '<div class="card-mfr">' + escapeHtml(mfrModel) + '</div>' : '',
+              attrs.length ? '<div class="card-attrs">' + attrs.join('') + '</div>' : '',
+              item.no ? '<p class="card-notes">' + escapeHtml(item.no) + '</p>' : '',
+              '<div class="card-actions">',
+                '<a class="btn" href="' + buildMailto(item, d) + '">Approve this option</a>',
+                specLink,
+              '</div>',
+            '</div>',
+          '</div>'
+        ].join('');
+      }
+
+      function buildMailto(item, d) {
+        const make  = item.make || '';
+        const mod   = item.mod || '';
+        const optLabel = [make, mod].filter(Boolean).join(' ') || (item.ti || 'option');
+        const subject = 'Selection approval: ' + (d.tm || '') + (d.tm ? ' ' : '') + optLabel;
+
+        const lines = [
+          'Hello Selections Team,',
+          '',
+          'I approve this option:',
+          '',
+          '  Item: ' + (d.ti || ''),
+          '  Type Mark: ' + (d.tm || ''),
+          '  Option: ' + optLabel + (item.id ? ' (purchase ' + item.id + ')' : ''),
+          '  Project: ' + (d.pn || ''),
+          '  Area: ' + (d.ar || ''),
+          '',
+          'Thanks'
+        ];
+
+        const body = lines.join('\r\n');
+        return 'mailto:selections@craftedearth.com'
+          + '?subject=' + encodeURIComponent(subject)
+          + '&body=' + encodeURIComponent(body);
+      }
+
+      function buildReturnMailto(d) {
+        const subject = 'Selection feedback: ' + (d.tm || '') + (d.tm ? ' ' : '') + (d.ti || '');
+
+        const lines = [
+          'Hello Selections Team,',
+          '',
+          'A few thoughts on this selection:',
+          '',
+          '  [ Write your comments, questions, or change requests here ]',
+          '',
+          '---',
+          '  Item: ' + (d.ti || ''),
+          '  Type Mark: ' + (d.tm || ''),
+          '  Project: ' + (d.pn || ''),
+          '  Area: ' + (d.ar || ''),
+          '',
+          'Thanks'
+        ];
+
+        const body = lines.join('\r\n');
+        return 'mailto:selections@craftedearth.com'
+          + '?subject=' + encodeURIComponent(subject)
+          + '&body=' + encodeURIComponent(body);
+      }
+
+      // ---- Helpers ----------------------------------------------------------
+      function fmtQty(q, u) {
+        if (!q && q !== 0) return '';
+        return 'Qty ' + q + (u ? ' ' + u : '');
+      }
+      function fmtLead(d) {
+        if (!d && d !== 0) return '';
+        return 'Lead ' + d + ' days';
+      }
+      function escapeHtml(s) {
+        if (s === null || s === undefined) return '';
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+      function escapeAttr(s) {
+        if (s === null || s === undefined) return '';
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+    })();
+  </script>
+</body>
+</html>
