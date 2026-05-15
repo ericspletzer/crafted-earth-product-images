@@ -35,8 +35,11 @@
         "id":   163,                               // Purchase ID
         "st":   "Proposed",                        // Shipment Status (REQUIRED — drives sort + filter)
                                                    //   Known values: "Placeholder", "Proposed",
-                                                   //   "Selected/Approved", "Ordered", "Received",
+                                                   //   "Selected", "Ordered", "Received",
                                                    //   "Installed", "Cancelled".
+                                                   //   "Selected" = design selection locked in.
+                                                   //   ("Approved" is a future cost-review gate, NOT here.)
+                                                   //   Legacy "Selected/Approved" is mapped to "Selected".
                                                    //   Blank/null is treated as "Placeholder".
                                                    //   Placeholder section renders collapsed at top.
         "tm":   "SS08",                            // Type Mark
@@ -277,7 +280,7 @@
     }
     .badge.placeholder    { background: #b0b0b0; }
     .badge.proposed       { background: #0a304e; }
-    .badge.approved       { background: #2d6b3e; }
+    .badge.selected       { background: #2d6b3e; }
     .badge.ordered        { background: #8a6b22; }
     .badge.received       { background: #4a4a4a; }
     .badge.installed      { background: #1f4d2c; }
@@ -421,11 +424,11 @@
     (function () {
       // ---- Status ordering & display --------------------------------------
       // Sort order — Placeholder first (collapsed peek), then Proposed (needs
-      // action), then approved/ordered/received/installed/cancelled.
+      // action), then selected/ordered/received/installed/cancelled.
       const STATUS_ORDER = [
         'Placeholder',
         'Proposed',
-        'Selected/Approved',
+        'Selected',
         'Ordered',
         'Received',
         'Installed',
@@ -435,7 +438,7 @@
       const STATUS_CLASS = {
         'Placeholder':        'placeholder',
         'Proposed':           'proposed',
-        'Selected/Approved':  'approved',
+        'Selected':           'selected',
         'Ordered':            'ordered',
         'Received':           'received',
         'Installed':          'installed',
@@ -445,7 +448,7 @@
       const STATUS_LABEL = {
         'Placeholder':        'Still in Development',
         'Proposed':           'Proposed — Action Needed',
-        'Selected/Approved':  'Selected / Approved',
+        'Selected':           'Selected',
         'Ordered':            'Ordered',
         'Received':           'Received',
         'Installed':          'Installed',
@@ -455,10 +458,19 @@
       // not a primary view — collapse it at start).
       const COLLAPSED_STATUSES = { 'Placeholder': true };
 
+      // Legacy status mapping — older canvas-app payloads may still emit
+      // 'Selected/Approved' during the migration window. Map it forward
+      // so rendering stays consistent until the data side catches up.
+      const STATUS_ALIASES = {
+        'Selected/Approved': 'Selected'
+      };
+
       // Normalize blank/null status to 'Placeholder' (defensive — items
-      // without a Shipment Status are effectively in-development).
+      // without a Shipment Status are effectively in-development). Also
+      // resolve legacy aliases.
       function normalizeStatus(st) {
-        return (st && String(st).trim()) || 'Placeholder';
+        const raw = (st && String(st).trim()) || 'Placeholder';
+        return STATUS_ALIASES[raw] || raw;
       }
 
       // ---- Demo fallback (used when no ?d= param is given) ----------------
@@ -498,7 +510,7 @@
             url: "selection.html"
           },
           {
-            id: 145, st: "Selected/Approved", tm: "SS01", ti: "Vanity Faucet",
+            id: 145, st: "Selected", tm: "SS01", ti: "Vanity Faucet",
             ar: "En Suite Bathroom", pn: "33 Estelle Ave",
             qt: 2, un: "EA", ld: 8,
             make: "Brizo", mod: "65085LF-MB",
@@ -508,7 +520,7 @@
             url: "selection.html"
           },
           {
-            id: 152, st: "Selected/Approved", tm: "LT01", ti: "Vanity Sconce",
+            id: 152, st: "Selected", tm: "LT01", ti: "Vanity Sconce",
             ar: "En Suite Bathroom", pn: "33 Estelle Ave",
             qt: 4, un: "EA", ld: 12,
             make: "Visual Comfort", mod: "TOB2202",
