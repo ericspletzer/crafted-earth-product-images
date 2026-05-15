@@ -34,8 +34,11 @@
       {
         "id":   163,                               // Purchase ID
         "st":   "Proposed",                        // Shipment Status (REQUIRED — drives sort + filter)
-                                                   //   Known values: "Proposed", "Selected/Approved",
-                                                   //   "Ordered", "Received", "Installed", "Cancelled"
+                                                   //   Known values: "Placeholder", "Proposed",
+                                                   //   "Selected/Approved", "Ordered", "Received",
+                                                   //   "Installed", "Cancelled".
+                                                   //   Blank/null is treated as "Placeholder".
+                                                   //   Placeholder section renders collapsed at top.
         "tm":   "SS08",                            // Type Mark
         "ti":   "TOILET PAPER HOLDER",             // Item title
         "ar":   "En Suite Bathroom",               // Area
@@ -156,6 +159,51 @@
       font-weight: 600;
     }
 
+    /* Collapsible Placeholder section — uses native <details>/<summary> */
+    details.section-collapsible {
+      margin: 24px 0 0;
+    }
+    details.section-collapsible > summary {
+      list-style: none;          /* hide default disclosure arrow */
+      cursor: pointer;
+      user-select: none;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin: 0 0 8px;
+      border-bottom: 1px solid #d4d4d4;
+      padding: 0 0 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    details.section-collapsible > summary::-webkit-details-marker { display: none; }
+    details.section-collapsible > summary::before {
+      content: "\25B6";          /* triangle right */
+      font-size: 9px;
+      color: #b0b0b0;
+      transition: transform 0.15s;
+      display: inline-block;
+      transform-origin: center;
+      width: 12px;
+    }
+    details[open].section-collapsible > summary::before {
+      content: "\25BC";          /* triangle down */
+    }
+    details.section-collapsible > summary:hover { color: #1a1a1a; }
+    details.section-collapsible > summary:hover::before { color: #0a304e; }
+    details.section-collapsible > summary .count {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: #b0b0b0;
+      font-weight: 600;
+    }
+    details.section-collapsible[open] {
+      margin-bottom: 12px;
+    }
+
     /* Cards — visual parity with selection.html cards, compressed for list view */
     .card {
       display: grid;
@@ -227,12 +275,22 @@
       background: #6b6b6b;
       color: #fff;
     }
+    .badge.placeholder    { background: #b0b0b0; }
     .badge.proposed       { background: #0a304e; }
     .badge.approved       { background: #2d6b3e; }
     .badge.ordered        { background: #8a6b22; }
     .badge.received       { background: #4a4a4a; }
-    .badge.installed      { background: #2d6b3e; }
+    .badge.installed      { background: #1f4d2c; }
     .badge.cancelled      { background: #b0392f; }
+
+    /* Placeholder cards — muted treatment so they read as "not yet ready" */
+    .card.status-placeholder {
+      background: #fafaf8;
+      border-style: dashed;
+      opacity: 0.85;
+    }
+    .card.status-placeholder .card-title { color: #4a4a4a; }
+    .card.status-placeholder:hover { opacity: 1; }
 
     .tm {
       font-family: 'Consolas', 'Monaco', monospace;
@@ -362,8 +420,10 @@
   <script>
     (function () {
       // ---- Status ordering & display --------------------------------------
-      // Sort order — Proposed first (needs action), then approved/ordered/etc.
+      // Sort order — Placeholder first (collapsed peek), then Proposed (needs
+      // action), then approved/ordered/received/installed/cancelled.
       const STATUS_ORDER = [
+        'Placeholder',
         'Proposed',
         'Selected/Approved',
         'Ordered',
@@ -373,6 +433,7 @@
       ];
       // CSS class suffix per status (used on .badge and .card.status-*)
       const STATUS_CLASS = {
+        'Placeholder':        'placeholder',
         'Proposed':           'proposed',
         'Selected/Approved':  'approved',
         'Ordered':            'ordered',
@@ -382,6 +443,7 @@
       };
       // Section labels — match selection.html section-label pattern
       const STATUS_LABEL = {
+        'Placeholder':        'Still in Development',
         'Proposed':           'Proposed — Action Needed',
         'Selected/Approved':  'Selected / Approved',
         'Ordered':            'Ordered',
@@ -389,6 +451,15 @@
         'Installed':          'Installed',
         'Cancelled':          'Cancelled'
       };
+      // Sections that render collapsed-by-default (Placeholder is a peek,
+      // not a primary view — collapse it at start).
+      const COLLAPSED_STATUSES = { 'Placeholder': true };
+
+      // Normalize blank/null status to 'Placeholder' (defensive — items
+      // without a Shipment Status are effectively in-development).
+      function normalizeStatus(st) {
+        return (st && String(st).trim()) || 'Placeholder';
+      }
 
       // ---- Demo fallback (used when no ?d= param is given) ----------------
       const DEMO = {
@@ -464,6 +535,34 @@
             img: "",
             msrp: 295.00,
             url: "selection.html"
+          },
+          {
+            id: 104, st: "Installed", tm: "DH01", ti: "Entry Door Hardware",
+            ar: "Entry", pn: "33 Estelle Ave",
+            qt: 1, un: "EA", ld: 0,
+            make: "Emtek", mod: "L7700",
+            img: "",
+            fi: "Oil Rubbed Bronze",
+            msrp: 480.00,
+            url: "selection.html"
+          },
+          {
+            id: 188, st: "Placeholder", tm: "CK01", ti: "Kitchen Faucet",
+            ar: "Kitchen", pn: "33 Estelle Ave",
+            qt: 1, un: "EA",
+            url: "selection.html"
+          },
+          {
+            id: 189, st: "Placeholder", tm: "MR01", ti: "Vanity Mirror",
+            ar: "En Suite Bathroom", pn: "33 Estelle Ave",
+            qt: 2, un: "EA",
+            url: "selection.html"
+          },
+          {
+            id: 190, st: "Placeholder", tm: "TW01", ti: "Towel Bar",
+            ar: "En Suite Bathroom", pn: "33 Estelle Ave",
+            qt: 2, un: "EA",
+            url: "selection.html"
           }
         ]
       };
@@ -502,7 +601,7 @@
       function renderAll() {
         const d = data;
         const root = document.getElementById('root');
-        const items = d.items || [];
+        const items = (d.items || []).map(it => Object.assign({}, it, { st: normalizeStatus(it.st) }));
         const proposedCount = items.filter(i => i.st === 'Proposed').length;
         const totalCount = items.length;
 
@@ -565,8 +664,16 @@
           orderedKeys.forEach(k => {
             const group = buckets[k];
             const label = STATUS_LABEL[k] || k;
-            html += '<div class="section-label">' + escapeHtml(label) + ' <span class="count">' + group.length + '</span></div>';
-            group.forEach(item => { html += cardHtml(item, d); });
+            const collapse = COLLAPSED_STATUSES[k];
+            if (collapse) {
+              html += '<details class="section-collapsible">';
+              html += '<summary>' + escapeHtml(label) + ' <span class="count">' + group.length + '</span></summary>';
+              group.forEach(item => { html += cardHtml(item, d); });
+              html += '</details>';
+            } else {
+              html += '<div class="section-label">' + escapeHtml(label) + ' <span class="count">' + group.length + '</span></div>';
+              group.forEach(item => { html += cardHtml(item, d); });
+            }
           });
         }
 
