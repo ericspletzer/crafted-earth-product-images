@@ -36,20 +36,25 @@
 
   {
     "title": "33 Estelle Ave — Selections",        // optional, overrides default header text
+    "slug":  "33-estelle",                         // optional, used for ?p=&id= deep-link composition
     "pn":    "33 Estelle Ave",                     // optional project context (omit for multi-project)
     "gen":   "2026-05-15",                         // optional generated-date string (free-form)
     "items": [
       {
         "id":   163,                               // Purchase ID
-        "st":   "Proposed",                        // Shipment Status (REQUIRED — drives sort + filter)
-                                                   //   Known values: "Placeholder", "Proposed",
-                                                   //   "Selected", "Ordered", "Received",
+        "pt":   "Primary",                         // Purchase Type — "Primary" | "Alternative".
+                                                   //   Alternative rows live in the payload (for
+                                                   //   selection.html ?p=&id= mode) but never render
+                                                   //   in the list view.
+        "pp":   162,                               // (Alternative only) Parent purchase id.
+        "st":   "Proposed",                        // Shipment Status (REQUIRED for Primary — drives
+                                                   //   sort + filter). Known values: "Placeholder",
+                                                   //   "Proposed", "Selected", "Ordered", "Received",
                                                    //   "Installed", "Cancelled".
                                                    //   "Selected" = design selection locked in.
-                                                   //   ("Approved" is a future cost-review gate, NOT here.)
-                                                   //   Legacy "Selected/Approved" is mapped to "Selected".
-                                                   //   Blank/null is treated as "Placeholder".
-                                                   //   Placeholder section renders collapsed at top.
+                                                   //   ("Approved" is a future cost-review gate.)
+                                                   //   Legacy "Selected/Approved" → "Selected".
+                                                   //   Blank/null → "Placeholder" (collapsed at top).
         "tm":   "SS08",                            // Type Mark
         "ti":   "TOILET PAPER HOLDER",             // Item title
         "ar":   "En Suite Bathroom",               // Area
@@ -60,8 +65,8 @@
         "fi":   "Matte Black",                     // Optional Finish/Color
         "co":   "Occasion",                        // Optional Collection
         "msrp": 189.00,                            // Optional list price (number)
-        "url":  "https://ericspletzer.github.io/crafted-earth-product-images/embed/selection.html?d=..."
-                                                   // Pre-built deep-link to detail page (REQUIRED for click-through)
+        "url":  "selection.html?p=33-estelle&id=163"
+                                                   // Pre-built deep-link to detail page (REQUIRED).
       },
       ...
     ]
@@ -645,7 +650,12 @@
       function renderAll() {
         const d = data;
         const root = document.getElementById('root');
-        const items = (d.items || []).map(it => Object.assign({}, it, { st: normalizeStatus(it.st) }));
+        // Primary-only filter — alternates (pt === 'Alternative') live in the
+        // payload so selection.html can render them when reached via ?p=&id=,
+        // but the list page never shows them as standalone rows.
+        const items = (d.items || [])
+          .filter(it => !it.pt || it.pt === 'Primary')
+          .map(it => Object.assign({}, it, { st: normalizeStatus(it.st) }));
         const proposedCount = items.filter(i => i.st === 'Proposed').length;
         const totalCount = items.length;
 
@@ -775,8 +785,10 @@
         const href = item.url || ('selection.html?id=' + encodeURIComponent(item.id || ''));
         const ctaLabel = statusKey === 'Proposed' ? 'Review' : 'View';
 
+        // Open in same tab — selection.html has a back-link to here, so the
+        // user can navigate without juggling browser tabs.
         return [
-          '<a class="' + cardCls + '" href="' + escapeAttr(href) + '" target="_blank" rel="noopener">',
+          '<a class="' + cardCls + '" href="' + escapeAttr(href) + '">',
             thumbHtml,
             '<div class="card-body">',
               '<div class="card-row1">',
