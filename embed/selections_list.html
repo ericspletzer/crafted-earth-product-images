@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<!--
+  Crafted Earth — Selections List (anonymous, GitHub-Pages-hosted)
+  Companion page to embed/selection.html (single-selection detail).
+
+  Reads all data from a single URL param `?d=<JSON>` (URI-encoded).
+  Renders a comprehensive list of purchases for one project (or many),
+  grouped by Shipment Status with section labels. Top toggle filters
+  to "Proposed only" (action-needed) vs "All".
+
+  Each row deep-links to its individual selection.html via a pre-built
+  `url` field carried in the row payload (the canvas app composes the
+  link; this page just renders).
+
+  Visual language mirrors selection.html: same palette (#0a304e navy,
+  #f4f3ef paper, #fff cards), same typography, same section labels,
+  same card border treatment for the primary/action class.
+
+  Designed for Miro iframe embedding. Same iframe-context banner pattern
+  as selection.html.
+
+  No backend, no auth, no cost.
+  Repo: ericspletzer/crafted-earth-product-images
+  Path: /embed/selections_list.html
+
+  ---------------------------------------------------------------------
+  JSON contract (for canvas-app `?d=` payload — build with JSON(record, JSONFormat.Compact) + EncodeUrl):
+
+  {
+    "title": "33 Estelle Ave — Selections",        // optional, overrides default header text
+    "pn":    "33 Estelle Ave",                     // optional project context (omit for multi-project)
+    "gen":   "2026-05-15",                         // optional generated-date string (free-form)
+    "items": [
+      {
+        "id":   163,                               // Purchase ID
+        "st":   "Proposed",                        // Shipment Status (REQUIRED — drives sort + filter)
+                                                   //   Known values: "Proposed", "Selected/Approved",
+                                                   //   "Ordered", "Received", "Installed", "Cancelled"
+        "tm":   "SS08",                            // Type Mark
+        "ti":   "TOILET PAPER HOLDER",             // Item title
+        "ar":   "En Suite Bathroom",               // Area
+        "pn":   "33 Estelle Ave",                  // Project name (per-row; supports multi-project)
+        "qt":   2, "un": "EA", "ld": 10,           // Quantity / Unit / Lead time days
+        "make": "Kohler", "mod": "K-27064",        // Manufacturer / Model
+        "img":  "https://.../primary-thumb.png",   // Optional primary image URL
+        "fi":   "Matte Black",                     // Optional Finish/Color
+        "co":   "Occasion",                        // Optional Collection
+        "msrp": 189.00,                            // Optional list price (number)
+        "url":  "https://ericspletzer.github.io/crafted-earth-product-images/embed/selection.html?d=..."
+                                                   // Pre-built deep-link to detail page (REQUIRED for click-through)
+      },
+      ...
+    ]
+  }
+  ---------------------------------------------------------------------
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crafted Earth — Selections List</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f4f3ef;
+      color: #1a1a1a;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .wrap { max-width: 880px; margin: 0 auto; padding: 24px 16px 64px; }
+
+    /* Header — matches selection.html */
+    header.top {
+      border-bottom: 1px solid #1a1a1a;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .brand {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 4px 0 0;
+      letter-spacing: -0.01em;
+    }
+    .meta {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #4a4a4a;
+    }
+    .meta span + span::before { content: " \00b7 "; color: #b0b0b0; }
+
+    /* Top filter bar */
+    .top-actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #0a304e;
+      background: transparent;
+      border: 1px solid #0a304e;
+      padding: 7px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .filter-btn:hover { background: rgba(10, 48, 78, 0.08); }
+    .filter-btn.active {
+      background: #0a304e;
+      color: #fff;
+    }
+    .filter-btn .count {
+      font-weight: 500;
+      opacity: 0.75;
+      font-size: 11px;
+    }
+    .filter-btn.active .count { opacity: 0.85; }
+
+    /* Section label — matches selection.html */
+    .section-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      margin: 32px 0 12px;
+      border-bottom: 1px solid #d4d4d4;
+      padding-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+    .section-label .count {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      color: #b0b0b0;
+      font-weight: 600;
+    }
+
+    /* Cards — visual parity with selection.html cards, compressed for list view */
+    .card {
+      display: grid;
+      grid-template-columns: 140px 1fr auto;
+      gap: 16px;
+      align-items: stretch;
+      background: #fff;
+      border: 1px solid #d4d4d4;
+      border-radius: 4px;
+      padding: 14px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+    }
+    .card:hover {
+      border-color: #0a304e;
+      box-shadow: 0 2px 8px rgba(10, 48, 78, 0.1);
+    }
+    /* Status-driven border treatment — Proposed gets the 2px navy treatment
+       (matches selection.html primary card) since it needs action. */
+    .card.status-proposed {
+      border-color: #0a304e;
+      border-width: 2px;
+      padding: 13px;  /* offset the extra 1px border on each side */
+    }
+    .card.status-proposed:hover {
+      box-shadow: 0 2px 10px rgba(10, 48, 78, 0.18);
+    }
+
+    .card-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      background: #fafaf8;
+      border: 1px solid #e8e8e6;
+      border-radius: 2px;
+    }
+    .card-image.no-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .card-row1 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 2px;
+      background: #6b6b6b;
+      color: #fff;
+    }
+    .badge.proposed       { background: #0a304e; }
+    .badge.approved       { background: #2d6b3e; }
+    .badge.ordered        { background: #8a6b22; }
+    .badge.received       { background: #4a4a4a; }
+    .badge.installed      { background: #2d6b3e; }
+    .badge.cancelled      { background: #b0392f; }
+
+    .tm {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0a304e;
+      letter-spacing: 0.02em;
+    }
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-mfr {
+      font-size: 13px;
+      color: #6b6b6b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-attrs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+      color: #4a4a4a;
+      margin-top: auto;
+    }
+    .card-attrs strong { color: #1a1a1a; font-weight: 500; }
+    .card-attrs span { white-space: nowrap; }
+
+    .card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #0a304e;
+      white-space: nowrap;
+      align-self: center;
+      padding: 0 4px;
+    }
+    .card-cta::after { content: "\2192"; font-size: 14px; font-weight: 400; }
+
+    /* Footer — matches selection.html */
+    footer.bot {
+      margin-top: 48px;
+      padding-top: 16px;
+      border-top: 1px solid #d4d4d4;
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      text-align: center;
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .card {
+        grid-template-columns: 96px 1fr;
+        gap: 12px;
+        padding: 12px;
+      }
+      .card.status-proposed { padding: 11px; }
+      .card-image { max-width: 96px; }
+      .card-cta {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+        padding-top: 4px;
+        border-top: 1px solid #f0f0f0;
+      }
+      .card-title { font-size: 14px; white-space: normal; }
+      h1 { font-size: 19px; }
+    }
+
+    /* Empty-state */
+    .empty {
+      padding: 60px 20px;
+      text-align: center;
+      color: #6b6b6b;
+    }
+    .empty h2 { font-size: 18px; margin-bottom: 8px; color: #1a1a1a; }
+    .empty p { font-size: 14px; }
+    .empty-filtered {
+      padding: 40px 20px;
+      text-align: center;
+      color: #6b6b6b;
+      background: #fff;
+      border: 1px dashed #d4d4d4;
+      border-radius: 4px;
+    }
+
+    /* Iframe-context banner — matches selection.html */
+    .iframe-banner {
+      background: #fff8d6;
+      border: 1px solid #d4c068;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #1a1a1a;
+      display: none;
+    }
+    .iframe-banner.show { display: block; }
+    .iframe-banner a {
+      color: #0a304e;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="root">
+    <div class="empty">
+      <h2>Loading selections&hellip;</h2>
+      <p>If you see this for more than a moment, the link may be incomplete. Contact eric@craftedearth.com.</p>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // ---- Status ordering & display --------------------------------------
+      // Sort order — Proposed first (needs action), then approved/ordered/etc.
+      const STATUS_ORDER = [
+        'Proposed',
+        'Selected/Approved',
+        'Ordered',
+        'Received',
+        'Installed',
+        'Cancelled'
+      ];
+      // CSS class suffix per status (used on .badge and .card.status-*)
+      const STATUS_CLASS = {
+        'Proposed':           'proposed',
+        'Selected/Approved':  'approved',
+        'Ordered':            'ordered',
+        'Received':           'received',
+        'Installed':          'installed',
+        'Cancelled':          'cancelled'
+      };
+      // Section labels — match selection.html section-label pattern
+      const STATUS_LABEL = {
+        'Proposed':           'Proposed — Action Needed',
+        'Selected/Approved':  'Selected / Approved',
+        'Ordered':            'Ordered',
+        'Received':           'Received',
+        'Installed':          'Installed',
+        'Cancelled':          'Cancelled'
+      };
+
+      // ---- Demo fallback (used when no ?d= param is given) ----------------
+      const DEMO = {
+        title: "33 Estelle Ave — Selections",
+        pn: "33 Estelle Ave",
+        gen: "2026-05-15",
+        items: [
+          {
+            id: 163, st: "Proposed", tm: "SS08", ti: "Toilet Paper Holder",
+            ar: "En Suite Bathroom", pn: "33 Estelle Ave",
+            qt: 2, un: "EA", ld: 10,
+            make: "Kohler", mod: "K-27064",
+            img: "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/649-20260512160808.png",
+            fi: "Matte Black", co: "Occasion",
+            msrp: 189.00,
+            url: "selection.html"
+          },
+          {
+            id: 167, st: "Proposed", tm: "PF02", ti: "Bathroom Faucet",
+            ar: "En Suite Bathroom", pn: "33 Estelle Ave",
+            qt: 1, un: "EA", ld: 14,
+            make: "Brizo", mod: "65085LF-PC",
+            img: "",
+            fi: "Polished Chrome",
+            msrp: 624.00,
+            url: "selection.html"
+          },
+          {
+            id: 172, st: "Proposed", tm: "LT04", ti: "Pendant Light",
+            ar: "Kitchen", pn: "33 Estelle Ave",
+            qt: 3, un: "EA", ld: 21,
+            make: "Visual Comfort", mod: "CHC5215",
+            img: "",
+            fi: "Aged Iron",
+            msrp: 1450.00,
+            url: "selection.html"
+          },
+          {
+            id: 145, st: "Selected/Approved", tm: "SS01", ti: "Vanity Faucet",
+            ar: "En Suite Bathroom", pn: "33 Estelle Ave",
+            qt: 2, un: "EA", ld: 8,
+            make: "Brizo", mod: "65085LF-MB",
+            img: "",
+            fi: "Matte Black",
+            msrp: 624.00,
+            url: "selection.html"
+          },
+          {
+            id: 152, st: "Selected/Approved", tm: "LT01", ti: "Vanity Sconce",
+            ar: "En Suite Bathroom", pn: "33 Estelle Ave",
+            qt: 4, un: "EA", ld: 12,
+            make: "Visual Comfort", mod: "TOB2202",
+            img: "",
+            fi: "Bronze",
+            msrp: 425.00,
+            url: "selection.html"
+          },
+          {
+            id: 138, st: "Ordered", tm: "T01", ti: "Floor Tile",
+            ar: "En Suite Bathroom", pn: "33 Estelle Ave",
+            qt: 220, un: "SF", ld: 6,
+            make: "Cle Tile", mod: "Foundation Hex",
+            img: "",
+            fi: "Soft White",
+            msrp: 18.50,
+            url: "selection.html"
+          },
+          {
+            id: 121, st: "Received", tm: "P01", ti: "Lavatory",
+            ar: "Powder Room", pn: "33 Estelle Ave",
+            qt: 1, un: "EA", ld: 4,
+            make: "Kohler", mod: "K-2882",
+            img: "",
+            msrp: 295.00,
+            url: "selection.html"
+          }
+        ]
+      };
+
+      // ---- Parse single ?d=<JSON> URL parameter ---------------------------
+      const params = new URLSearchParams(location.search);
+      const raw = params.get('d');
+
+      let data;
+      if (!raw) {
+        data = DEMO;
+      } else {
+        try {
+          data = JSON.parse(raw);
+        } catch (e) {
+          renderEmpty('Could not read selections data. The link may be corrupted.');
+          return;
+        }
+        if (!data.items || data.items.length === 0) {
+          renderEmpty('No selections.');
+          return;
+        }
+      }
+
+      // Filter state — 'all' or 'proposed'
+      let filterMode = 'all';
+
+      renderAll();
+
+      // ---- Renderers ------------------------------------------------------
+      function renderEmpty(msg) {
+        document.getElementById('root').innerHTML =
+          '<div class="empty"><h2>Selections unavailable</h2><p>' + escapeHtml(msg) + '</p></div>';
+      }
+
+      function renderAll() {
+        const d = data;
+        const root = document.getElementById('root');
+        const items = d.items || [];
+        const proposedCount = items.filter(i => i.st === 'Proposed').length;
+        const totalCount = items.length;
+
+        const titleText = d.title || (d.pn ? d.pn + ' — Selections' : 'Selections');
+
+        const metaParts = [];
+        if (d.pn && !d.title) metaParts.push(d.pn);
+        if (d.gen) metaParts.push(d.gen);
+        const meta = metaParts.map(s => '<span>' + escapeHtml(s) + '</span>').join('');
+
+        // Detect iframe context — banner only shown when embedded.
+        // Wrapped in try/catch because cross-origin iframes throw on window.top.
+        let inIframe = false;
+        try { inIframe = window.top !== window.self; }
+        catch (e) { inIframe = true; }
+
+        let html = '';
+        if (inIframe) {
+          html += '<div class="iframe-banner show">';
+          html += '  This list is embedded. Clicks on a row may be blocked here — ';
+          html += '  <a href="' + escapeAttr(window.location.href) + '" target="_blank" rel="noopener">open in a new tab</a> ';
+          html += '  to navigate to each selection.';
+          html += '</div>';
+        }
+
+        html += '<header class="top">';
+        html += '  <div class="brand">Crafted Earth &middot; Selections</div>';
+        html += '  <h1>' + escapeHtml(titleText) + '</h1>';
+        if (meta) html += '  <div class="meta">' + meta + '</div>';
+        html += '  <div class="top-actions">';
+        html += '    <button type="button" class="filter-btn' + (filterMode === 'all' ? ' active' : '') + '" data-filter="all">All <span class="count">' + totalCount + '</span></button>';
+        html += '    <button type="button" class="filter-btn' + (filterMode === 'proposed' ? ' active' : '') + '" data-filter="proposed">Proposed <span class="count">' + proposedCount + '</span></button>';
+        html += '  </div>';
+        html += '</header>';
+
+        // Visible item set
+        const visible = filterMode === 'proposed'
+          ? items.filter(i => i.st === 'Proposed')
+          : items;
+
+        if (visible.length === 0) {
+          html += '<div class="empty-filtered">';
+          html += '  <p>No ' + escapeHtml(filterMode) + ' selections.</p>';
+          html += '</div>';
+        } else {
+          // Group by status in canonical order
+          const buckets = {};
+          visible.forEach(it => {
+            const key = it.st || 'Other';
+            if (!buckets[key]) buckets[key] = [];
+            buckets[key].push(it);
+          });
+
+          const orderedKeys = STATUS_ORDER.filter(k => buckets[k] && buckets[k].length);
+          // Append any unrecognized statuses at the bottom (defensive)
+          Object.keys(buckets).forEach(k => {
+            if (orderedKeys.indexOf(k) === -1) orderedKeys.push(k);
+          });
+
+          orderedKeys.forEach(k => {
+            const group = buckets[k];
+            const label = STATUS_LABEL[k] || k;
+            html += '<div class="section-label">' + escapeHtml(label) + ' <span class="count">' + group.length + '</span></div>';
+            group.forEach(item => { html += cardHtml(item, d); });
+          });
+        }
+
+        html += '<footer class="bot">';
+        html += '  <div>Crafted Earth, Inc. &middot; San Rafael, CA &middot; CSL 1015145 &middot; PE C82156</div>';
+        html += '  <div style="margin-top:6px;">Click any selection to review and approve.</div>';
+        html += '</footer>';
+
+        root.innerHTML = html;
+
+        // Wire filter buttons
+        root.querySelectorAll('.filter-btn').forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const next = btn.getAttribute('data-filter');
+            if (next !== filterMode) {
+              filterMode = next;
+              renderAll();
+            }
+          });
+        });
+      }
+
+      function cardHtml(item, d) {
+        const statusKey = item.st || 'Other';
+        const statusCls = STATUS_CLASS[statusKey] || '';
+        const cardCls = 'card' + (statusCls ? ' status-' + statusCls : '');
+        const badgeCls = 'badge' + (statusCls ? ' ' + statusCls : '');
+
+        const thumbHtml = item.img
+          ? '<img class="card-image" src="' + escapeAttr(item.img) + '" alt="' + escapeAttr(item.ti || '') + '" onerror="this.classList.add(\'no-image\');this.removeAttribute(\'src\');" />'
+          : '<div class="card-image no-image">No image</div>';
+
+        const tmHtml = item.tm ? '<span class="tm">' + escapeHtml(item.tm) + '</span>' : '';
+        const badgeHtml = '<span class="' + badgeCls + '">' + escapeHtml(statusKey) + '</span>';
+
+        const titleHtml = '<p class="card-title">' + escapeHtml(item.ti || 'Untitled') + '</p>';
+
+        const mfrModel = [item.make, item.mod ? 'Model ' + item.mod : null].filter(Boolean).join(' · ');
+        const mfrHtml = mfrModel ? '<div class="card-mfr">' + escapeHtml(mfrModel) + '</div>' : '';
+
+        // Per-row project shown only when it differs from header project (multi-project list).
+        const showProjectOnRow = !d.pn || (item.pn && item.pn !== d.pn);
+
+        const attrs = [];
+        if (item.fi) attrs.push('<span><strong>Finish:</strong> ' + escapeHtml(item.fi) + '</span>');
+        if (item.co) attrs.push('<span><strong>Collection:</strong> ' + escapeHtml(item.co) + '</span>');
+        if (showProjectOnRow && item.pn) attrs.push('<span><strong>Project:</strong> ' + escapeHtml(item.pn) + '</span>');
+        if (item.ar) attrs.push('<span><strong>Area:</strong> ' + escapeHtml(item.ar) + '</span>');
+        if (item.qt) attrs.push('<span><strong>Qty:</strong> ' + escapeHtml(String(item.qt)) + (item.un ? ' ' + escapeHtml(item.un) : '') + '</span>');
+        if (item.ld) attrs.push('<span><strong>Lead:</strong> ' + escapeHtml(String(item.ld)) + 'd</span>');
+        if (item.msrp || item.msrp === 0) attrs.push('<span><strong>List:</strong> $' + escapeHtml(formatMoney(item.msrp)) + '</span>');
+        const attrsHtml = attrs.length ? '<div class="card-attrs">' + attrs.join('') + '</div>' : '';
+
+        const href = item.url || ('selection.html?id=' + encodeURIComponent(item.id || ''));
+        const ctaLabel = statusKey === 'Proposed' ? 'Review' : 'View';
+
+        return [
+          '<a class="' + cardCls + '" href="' + escapeAttr(href) + '" target="_blank" rel="noopener">',
+            thumbHtml,
+            '<div class="card-body">',
+              '<div class="card-row1">',
+                badgeHtml,
+                tmHtml,
+              '</div>',
+              titleHtml,
+              mfrHtml,
+              attrsHtml,
+            '</div>',
+            '<span class="card-cta">' + ctaLabel + '</span>',
+          '</a>'
+        ].join('');
+      }
+
+      // ---- Helpers --------------------------------------------------------
+      function formatMoney(n) {
+        const num = Number(n);
+        if (!isFinite(num)) return '';
+        return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
+      function escapeHtml(s) {
+        if (s === null || s === undefined) return '';
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+      function escapeAttr(s) {
+        if (s === null || s === undefined) return '';
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+    })();
+  </script>
+</body>
+</html>
