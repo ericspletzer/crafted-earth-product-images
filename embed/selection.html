@@ -506,20 +506,34 @@
         const mod   = item.mod || '';
         const optLabel = [make, mod].filter(Boolean).join(' ') || (item.ti || 'option');
         const subject = 'Selection approval: ' + (d.tm || '') + (d.tm ? ' ' : '') + optLabel;
+        const viewUrl = window.location.href; // canonical link back to this selection
 
         const lines = [
           'Hello Selections Team,',
           '',
           'I approve this option:',
-          '',
-          '  Item: ' + (d.ti || ''),
-          '  Type Mark: ' + (d.tm || ''),
-          '  Option: ' + optLabel + (item.id ? ' (purchase ' + item.id + ')' : ''),
-          '  Project: ' + (d.pn || ''),
-          '  Area: ' + (d.ar || ''),
-          '',
-          'Thanks'
+          ''
         ];
+        if (d.tm)   lines.push('  Type Mark:    ' + d.tm);
+        if (d.ti)   lines.push('  Item:         ' + d.ti);
+        if (make)   lines.push('  Manufacturer: ' + make);
+        if (mod)    lines.push('  Model:        ' + mod);
+        if (item.fi) lines.push('  Finish:       ' + item.fi);
+        if (item.co) lines.push('  Collection:   ' + item.co);
+        if (item.msrp || item.msrp === 0) lines.push('  List price:   $' + formatMoney(item.msrp));
+        if (item.id) lines.push('  Purchase ID:  ' + item.id);
+        if (d.pn)   lines.push('  Project:      ' + d.pn);
+        if (d.ar)   lines.push('  Area:         ' + d.ar);
+        if (item.url) {
+          lines.push('');
+          lines.push('  Product spec:');
+          lines.push('  ' + item.url);
+        }
+        lines.push('');
+        lines.push('  View this selection:');
+        lines.push('  ' + viewUrl);
+        lines.push('');
+        lines.push('Thanks');
 
         const body = lines.join('\r\n');
         return 'mailto:selections@craftedearth.com'
@@ -529,6 +543,9 @@
 
       function buildReturnMailto(d) {
         const subject = 'Selection feedback: ' + (d.tm || '') + (d.tm ? ' ' : '') + (d.ti || '');
+        const viewUrl = window.location.href;
+        // Find the primary among the items for context (return emails go before approval).
+        const primary = (d.items || []).find(i => i.kind === 'primary') || (d.items || [])[0] || {};
 
         const lines = [
           'Hello Selections Team,',
@@ -537,14 +554,23 @@
           '',
           '  [ Write your comments, questions, or change requests here ]',
           '',
-          '---',
-          '  Item: ' + (d.ti || ''),
-          '  Type Mark: ' + (d.tm || ''),
-          '  Project: ' + (d.pn || ''),
-          '  Area: ' + (d.ar || ''),
-          '',
-          'Thanks'
+          '---'
         ];
+        if (d.tm)   lines.push('  Type Mark:    ' + d.tm);
+        if (d.ti)   lines.push('  Item:         ' + d.ti);
+        if (primary.make) lines.push('  Manufacturer: ' + primary.make);
+        if (primary.mod)  lines.push('  Model:        ' + primary.mod);
+        if (primary.fi)   lines.push('  Finish:       ' + primary.fi);
+        if (primary.co)   lines.push('  Collection:   ' + primary.co);
+        if (primary.msrp || primary.msrp === 0) lines.push('  List price:   $' + formatMoney(primary.msrp));
+        if (primary.id) lines.push('  Purchase ID:  ' + primary.id);
+        if (d.pn)   lines.push('  Project:      ' + d.pn);
+        if (d.ar)   lines.push('  Area:         ' + d.ar);
+        lines.push('');
+        lines.push('  View this selection:');
+        lines.push('  ' + viewUrl);
+        lines.push('');
+        lines.push('Thanks');
 
         const body = lines.join('\r\n');
         return 'mailto:selections@craftedearth.com'
