@@ -374,6 +374,7 @@
         const attrs = [];
         if (item.fi) attrs.push('<span><strong>Finish:</strong> ' + escapeHtml(item.fi) + '</span>');
         if (item.co) attrs.push('<span><strong>Collection:</strong> ' + escapeHtml(item.co) + '</span>');
+        if (item.msrp || item.msrp === 0) attrs.push('<span><strong>List:</strong> $' + escapeHtml(formatMoney(item.msrp)) + '</span>');
         const imgHtml = item.img
           ? '<img class="card-image" src="' + escapeAttr(item.img) + '" alt="' + escapeAttr(item.ti || '') + '" onerror="this.classList.add(\'no-image\');this.removeAttribute(\'src\');" />'
           : '<div class="card-image no-image">No image</div>';
@@ -451,6 +452,11 @@
       }
 
       // ---- Helpers ----------------------------------------------------------
+      function formatMoney(n) {
+        const num = Number(n);
+        if (!isFinite(num)) return '';
+        return num.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      }
       function fmtQty(q, u) {
         if (!q && q !== 0) return '';
         return 'Qty ' + q + (u ? ' ' + u : '');
