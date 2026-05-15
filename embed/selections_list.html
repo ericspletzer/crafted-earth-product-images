@@ -3,7 +3,15 @@
   Crafted Earth — Selections List (anonymous, GitHub-Pages-hosted)
   Companion page to embed/selection.html (single-selection detail).
 
-  Reads all data from a single URL param `?d=<JSON>` (URI-encoded).
+  Two data-source modes (resolved at load):
+
+    1. ?p=<project-slug>  — fetches ./data/<slug>.json (RECOMMENDED for real
+                            projects; URL stays short, refresh by committing
+                            a new JSON file).
+    2. ?d=<JSON>          — inline JSON payload, URL-encoded (only viable
+                            for small payloads — GitHub edge rejects URLs
+                            >16KB with HTTP 414).
+
   Renders a comprehensive list of purchases for one project (or many),
   grouped by Shipment Status with section labels. Top toggle filters
   to "Proposed only" (action-needed) vs "All".
@@ -579,16 +587,22 @@
         ]
       };
 
-      // ---- Parse single ?d=<JSON> URL parameter ---------------------------
+      // ---- Resolve data source --------------------------------------------
+      // Three modes, in priority order:
+      //   ?d=<JSON>         — inline JSON payload (small lists, single-project demo)
+      //   ?p=<project-slug> — fetch ./data/<slug>.json (clean URL; recommended for real projects)
+      //   no param          — DEMO fallback
       const params = new URLSearchParams(location.search);
-      const raw = params.get('d');
+      const rawInline = params.get('d');
+      const projectSlug = params.get('p');
 
       let data;
-      if (!raw) {
-        data = DEMO;
-      } else {
+      // Filter state — 'all' or 'proposed'
+      let filterMode = 'all';
+
+      if (rawInline) {
         try {
-          data = JSON.parse(raw);
+          data = JSON.parse(rawInline);
         } catch (e) {
           renderEmpty('Could not read selections data. The link may be corrupted.');
           return;
@@ -597,12 +611,30 @@
           renderEmpty('No selections.');
           return;
         }
+        renderAll();
+      } else if (projectSlug) {
+        // Fetch project JSON file from sibling ./data/ folder
+        const safeSlug = String(projectSlug).replace(/[^a-z0-9\-_]/gi, '');
+        fetch('./data/' + safeSlug + '.json', { cache: 'no-cache' })
+          .then(r => {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          })
+          .then(json => {
+            data = json;
+            if (!data.items || data.items.length === 0) {
+              renderEmpty('No selections for project "' + safeSlug + '".');
+              return;
+            }
+            renderAll();
+          })
+          .catch(err => {
+            renderEmpty('Could not load selections for project "' + safeSlug + '" (' + err.message + ').');
+          });
+      } else {
+        data = DEMO;
+        renderAll();
       }
-
-      // Filter state — 'all' or 'proposed'
-      let filterMode = 'all';
-
-      renderAll();
 
       // ---- Renderers ------------------------------------------------------
       function renderEmpty(msg) {
