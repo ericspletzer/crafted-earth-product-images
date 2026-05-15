@@ -3,7 +3,14 @@
   Crafted Earth — Selection page (anonymous, GitHub-Pages-hosted)
   Sister page to embed/index.html (gallery-card).
 
-  Reads all data from a single URL param `?d=<JSON>` (URI-encoded).
+  Two data-source modes (resolved at load):
+    1. ?d=<JSON>          — inline payload, primary+alts shape (canvas-app path)
+    2. ?p=<slug>&id=<n>   — fetch ./data/<slug>.json, find item by id, render
+                            as single primary (list-page-fed path; no alts)
+
+  When ?p=&id= mode is used, a back-link to selections_list.html?p=<slug>
+  renders above the page header.
+
   Approve buttons compose mailto:selections@craftedearth.com.
 
   No backend, no auth, no cost.
@@ -53,6 +60,20 @@
       color: #4a4a4a;
     }
     .meta span + span::before { content: " \00b7 "; color: #b0b0b0; }
+
+    /* Back-link to project list (shown only when reached via ?p=&id= mode) */
+    .back-link {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #6b6b6b;
+      text-decoration: none;
+      margin-bottom: 8px;
+      transition: color 0.15s;
+    }
+    .back-link:hover { color: #0a304e; }
 
     /* Header-level secondary action (Return with comments) */
     .top-actions {
@@ -282,30 +303,78 @@
         ]
       };
 
-      // ---- Parse single ?d=<JSON> URL parameter -----------------------------
+      // ---- Resolve data source --------------------------------------------
+      // Three modes, in priority order:
+      //   ?d=<JSON>             — inline payload (full primary+alts shape; canvas-app path)
+      //   ?p=<slug>&id=<n>      — fetch ./data/<slug>.json, locate row by id, render
+      //                            as single primary (no alts; list-page-fed path)
+      //   no param              — DEMO fallback
       const params = new URLSearchParams(location.search);
-      const raw = params.get('d');
+      const rawInline = params.get('d');
+      const projectSlug = params.get('p');
+      const itemId = params.get('id');
 
       let data;
-      if (!raw) {
+
+      if (rawInline) {
+        try {
+          data = JSON.parse(rawInline);
+        } catch (e) {
+          renderEmpty('Could not read selection data. The link may be corrupted.');
+          return;
+        }
+        if (!data.items || data.items.length === 0) {
+          renderEmpty('Selection contains no items.');
+          return;
+        }
+        render(data);
+      } else if (projectSlug && itemId) {
+        const safeSlug = String(projectSlug).replace(/[^a-z0-9\-_]/gi, '');
+        const safeId = String(itemId).replace(/[^0-9]/g, '');
+        fetch('./data/' + safeSlug + '.json', { cache: 'no-cache' })
+          .then(r => {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+          })
+          .then(json => {
+            const row = (json.items || []).find(it => String(it.id) === safeId);
+            if (!row) {
+              renderEmpty('Selection ' + safeId + ' not found in project "' + safeSlug + '".');
+              return;
+            }
+            // Transform flat list-row into selection.html's expected primary+alts shape.
+            // (Alts aren't carried in the list JSON; canvas-app ?d= mode is the alts path.)
+            data = {
+              tm: row.tm,
+              ti: row.ti,
+              pn: json.pn,
+              ar: row.ar,
+              qt: row.qt,
+              un: row.un,
+              ld: row.ld,
+              slug: safeSlug,
+              parentTitle: json.title,
+              items: [{
+                kind: 'primary',
+                id: row.id,
+                img: row.img,
+                make: row.make,
+                mod: row.mod,
+                ti: row.ti,
+                fi: row.fi,
+                co: row.co,
+                msrp: row.msrp
+              }]
+            };
+            render(data);
+          })
+          .catch(err => {
+            renderEmpty('Could not load selection (' + err.message + ').');
+          });
+      } else {
         data = DEMO;
         render(data);
-        return;
       }
-
-      try {
-        data = JSON.parse(raw);
-      } catch (e) {
-        renderEmpty('Could not read selection data. The link may be corrupted.');
-        return;
-      }
-
-      if (!data.items || data.items.length === 0) {
-        renderEmpty('Selection contains no items.');
-        return;
-      }
-
-      render(data);
 
       // ---- Renderers --------------------------------------------------------
       function renderEmpty(msg) {
@@ -341,6 +410,11 @@
 
         html += '<header class="top">';
         html += '  <div class="brand">Crafted Earth &middot; Selection</div>';
+        // Back-link to project list (only when reached via ?p=&id= path)
+        if (d.slug) {
+          const backLabel = d.pn ? 'All ' + d.pn + ' selections' : 'All selections';
+          html += '  <a class="back-link" href="selections_list.html?p=' + escapeAttr(d.slug) + '">&larr; ' + escapeHtml(backLabel) + '</a>';
+        }
         html += '  <h1>' + escapeHtml((d.tm ? d.tm + ' · ' : '') + (d.ti || '')) + '</h1>';
         if (meta) html += '  <div class="meta">' + meta + '</div>';
         html += '  <div class="top-actions">';
