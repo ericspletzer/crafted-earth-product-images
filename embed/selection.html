@@ -217,6 +217,24 @@
     }
     .empty h2 { font-size: 18px; margin-bottom: 8px; color: #1a1a1a; }
     .empty p { font-size: 14px; }
+
+    /* Iframe-context banner (only shown when embedded) */
+    .iframe-banner {
+      background: #fff8d6;
+      border: 1px solid #d4c068;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #1a1a1a;
+      display: none;
+    }
+    .iframe-banner.show { display: block; }
+    .iframe-banner a {
+      color: #0a304e;
+      font-weight: 600;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -305,7 +323,22 @@
           .map(s => '<span>' + escapeHtml(s) + '</span>')
           .join('');
 
+        // Detect iframe context — banner only shown when embedded.
+        // Wrapped in try/catch because cross-origin iframes throw when accessing window.top.
+        let inIframe = false;
+        try { inIframe = window.top !== window.self; }
+        catch (e) { inIframe = true; }
+
+        const directUrl = escapeAttr(window.location.href);
+
         let html = '';
+        if (inIframe) {
+          html += '<div class="iframe-banner show">';
+          html += '  This selection is embedded. To use the Approve and Return buttons, ';
+          html += '  <a href="' + directUrl + '" target="_blank" rel="noopener">open this page in a new tab</a>.';
+          html += '</div>';
+        }
+
         html += '<header class="top">';
         html += '  <div class="brand">Crafted Earth &middot; Selection</div>';
         html += '  <h1>' + escapeHtml((d.tm ? d.tm + ' · ' : '') + (d.ti || '')) + '</h1>';
