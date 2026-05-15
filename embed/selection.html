@@ -75,6 +75,27 @@
     }
     .back-link:hover { color: #0a304e; }
 
+    /* Type-mark chip in header (matches selections_list.html .tm style) */
+    .title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+    .tm-chip {
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      background: #0a304e;
+      letter-spacing: 0.02em;
+      padding: 4px 10px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+    .title-row h1 { margin: 0; }
+
     /* Header-level secondary action (Return with comments) */
     .top-actions {
       margin-top: 16px;
@@ -337,13 +358,26 @@
             return r.json();
           })
           .then(json => {
-            const row = (json.items || []).find(it => String(it.id) === safeId);
+            const allItems = json.items || [];
+            const row = allItems.find(it => String(it.id) === safeId && (!it.pt || it.pt === 'Primary'));
             if (!row) {
               renderEmpty('Selection ' + safeId + ' not found in project "' + safeSlug + '".');
               return;
             }
-            // Transform flat list-row into selection.html's expected primary+alts shape.
-            // (Alts aren't carried in the list JSON; canvas-app ?d= mode is the alts path.)
+            // Collect alternates pointing to this primary (pp === id).
+            const altRows = allItems.filter(it => it.pt === 'Alternative' && String(it.pp) === safeId);
+            // Transform flat list-row(s) into selection.html's primary+alts shape.
+            const toItem = (r, kind) => ({
+              kind: kind,
+              id: r.id,
+              img: r.img,
+              make: r.make,
+              mod: r.mod,
+              ti: r.ti,
+              fi: r.fi,
+              co: r.co,
+              msrp: r.msrp
+            });
             data = {
               tm: row.tm,
               ti: row.ti,
@@ -354,17 +388,7 @@
               ld: row.ld,
               slug: safeSlug,
               parentTitle: json.title,
-              items: [{
-                kind: 'primary',
-                id: row.id,
-                img: row.img,
-                make: row.make,
-                mod: row.mod,
-                ti: row.ti,
-                fi: row.fi,
-                co: row.co,
-                msrp: row.msrp
-              }]
+              items: [toItem(row, 'primary')].concat(altRows.map(a => toItem(a, 'alt')))
             };
             render(data);
           })
@@ -415,7 +439,10 @@
           const backLabel = d.pn ? 'All ' + d.pn + ' selections' : 'All selections';
           html += '  <a class="back-link" href="selections_list.html?p=' + escapeAttr(d.slug) + '">&larr; ' + escapeHtml(backLabel) + '</a>';
         }
-        html += '  <h1>' + escapeHtml((d.tm ? d.tm + ' · ' : '') + (d.ti || '')) + '</h1>';
+        html += '  <div class="title-row">';
+        if (d.tm) html += '    <span class="tm-chip">' + escapeHtml(d.tm) + '</span>';
+        html += '    <h1>' + escapeHtml(d.ti || '') + '</h1>';
+        html += '  </div>';
         if (meta) html += '  <div class="meta">' + meta + '</div>';
         html += '  <div class="top-actions">';
         html += '    <a class="btn-ghost" href="' + buildReturnMailto(d) + '" target="_blank" rel="noopener">Return with comments</a>';
