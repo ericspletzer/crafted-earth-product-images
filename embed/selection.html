@@ -311,7 +311,7 @@
         html += '  <h1>' + escapeHtml((d.tm ? d.tm + ' · ' : '') + (d.ti || '')) + '</h1>';
         if (meta) html += '  <div class="meta">' + meta + '</div>';
         html += '  <div class="top-actions">';
-        html += '    <a class="btn-ghost" href="' + buildReturnMailto(d) + '" target="_top">Return with comments</a>';
+        html += '    <a class="btn-ghost" href="' + buildReturnMailto(d) + '" target="_blank" rel="noopener">Return with comments</a>';
         html += '    <span class="top-actions-hint">Questions, change requests, or anything that&rsquo;s not a simple approve.</span>';
         html += '  </div>';
         html += '</header>';
@@ -358,7 +358,7 @@
               attrs.length ? '<div class="card-attrs">' + attrs.join('') + '</div>' : '',
               item.no ? '<p class="card-notes">' + escapeHtml(item.no) + '</p>' : '',
               '<div class="card-actions">',
-                '<a class="btn" href="' + buildMailto(item, d) + '" target="_top">Approve this option</a>',
+                '<a class="btn" href="' + buildMailto(item, d) + '" target="_blank" rel="noopener">Approve this option</a>',
                 specLink,
               '</div>',
             '</div>',
