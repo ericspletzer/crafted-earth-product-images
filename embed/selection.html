@@ -23,78 +23,168 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Crafted Earth — Selection</title>
   <style>
+    /* Self-hosted EB Garamond — CE print/equation brand serif, no third-party dependency */
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('eb-garamond.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── Type scale ──────────────────────────────────────────────────────────
+       Modular scale, major-third ratio (1.25), anchored on a 15px body — shared
+       verbatim with selections_list.html so the two pages read as one document.
+         step −2  9.6px   micro caps (badges)
+         step −1  12px    captions, meta, attrs labels
+         base     15px    body / notes reading text
+         step +1  18.75px  card title (display sans)
+         hero     32px    item title (Garamond) — set optically, off-ladder */
+    :root {
+      --f-serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
+      --f-sans: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --f-mono: 'Consolas', 'Monaco', monospace;
+
+      --t-micro: 9.6px;   /* step −2 */
+      --t-cap:   12px;    /* step −1 */
+      --t-base:  15px;    /* base    */
+      --t-up1:   18.75px; /* step +1 */
+      --t-hero:  32px;    /* item title */
+
+      --lh-tight: 1.08;   /* display leading */
+      --lh-read:  1.55;   /* reading leading (notes) */
+      --measure:  66ch;   /* optimal reading measure (Bringhurst 45–75) */
+    }
+
     html, body {
-      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--f-sans);
       background: #f4f3ef;
       color: #1a1a1a;
-      font-size: 15px;
+      font-size: var(--t-base);
       line-height: 1.5;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     .wrap { max-width: 880px; margin: 0 auto; padding: 24px 16px 64px; }
 
-    /* Header */
+    /* ── Top band ──────────────────────────────────────────────────────────── */
     header.top {
-      border-bottom: 1px solid #1a1a1a;
+      border-bottom: 1px solid #c4c0b5;   /* warm hairline — structure without heavy ink */
       padding-bottom: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
-    .brand {
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #6b6b6b;
-    }
-    h1 {
-      font-size: 22px;
-      font-weight: 600;
-      margin: 4px 0 0;
-      letter-spacing: -0.01em;
-    }
-    .meta {
-      margin-top: 8px;
-      font-size: 13px;
-      color: #4a4a4a;
-    }
-    .meta span + span::before { content: " \00b7 "; color: #b0b0b0; }
 
-    /* Back-link to project list (shown only when reached via ?p=&id= mode) */
-    .back-link {
-      display: inline-block;
-      font-size: 11px;
+    /* Masthead row: context column left, CE stamp right.
+       flex-start so the heavier stamp top-aligns to the eyebrow cap-line. */
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    /* Left column: eyebrow + back-link stacked */
+    .masthead-left {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    /* Context label ("Selection") */
+    .brand {
+      font-size: var(--t-micro);
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.34em;
       text-transform: uppercase;
+      color: #9a9a9a;
+      line-height: 1;
+    }
+
+    /* Back-link to project list */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: var(--t-cap);
+      font-weight: 400;
+      letter-spacing: 0.02em;
       color: #6b6b6b;
       text-decoration: none;
-      margin-bottom: 8px;
       transition: color 0.15s;
+      line-height: 1;
+    }
+    .back-link::before {
+      content: "\2190";           /* ← arrow */
+      font-size: 13px;
+      opacity: 0.7;
     }
     .back-link:hover { color: #0a304e; }
 
-    /* Type-mark chip in header (matches selections_list.html .tm style) */
+    /* Right: heritage stamp — dark ink, larger, real opacity. Optical
+       counterweight to the Garamond title (Tschichold dynamic equilibrium). */
+    .ce-logo {
+      flex-shrink: 0;
+      display: block;
+      line-height: 0;
+      margin-top: -2px;
+    }
+    .ce-logo img {
+      display: block;
+      width: 72px;
+      height: auto;
+      opacity: 0.62;
+    }
+
+    /* Title row: type-mark chip + item name */
     .title-row {
       display: flex;
       align-items: baseline;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
-      margin-top: 4px;
+      margin-bottom: 0;
     }
+
+    /* Item title — the hero. EB Garamond ties the viewer to the print/equation
+       brand. Negative tracking tightens the large serif optically. */
+    h1 {
+      font-family: var(--f-serif);
+      font-size: var(--t-hero);
+      font-weight: 500;
+      letter-spacing: -0.003em;
+      color: #1a1a1a;
+      line-height: var(--lh-tight);
+      margin: 0;
+      font-feature-settings: "liga" 1, "kern" 1;
+    }
+
+    /* Meta line */
+    .meta {
+      margin-top: 10px;
+      font-size: var(--t-cap);
+      color: #9a9a9a;
+      letter-spacing: 0.02em;
+    }
+    .meta span + span::before { content: " \00b7 "; color: #cfcabd; }
+
+    /* Type-mark chip in header (matches selections_list.html .tm style).
+       Tabular figures so the mono chip aligns on its numerals. */
     .tm-chip {
-      font-family: 'Consolas', 'Monaco', monospace;
+      font-family: var(--f-mono);
       font-size: 14px;
       font-weight: 700;
       color: #fff;
       background: #0a304e;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.03em;
+      font-variant-numeric: tabular-nums;
       padding: 4px 10px;
       border-radius: 3px;
       white-space: nowrap;
     }
-    .title-row h1 { margin: 0; }
 
     /* Header-level secondary action (Return with comments) */
     .top-actions {
@@ -125,14 +215,15 @@
       color: #6b6b6b;
     }
 
-    /* Section labels */
+    /* Section labels — micro caps, wide tracking; the tracking is the formality.
+       Generous top margin establishes the vertical rhythm between sections. */
     .section-label {
-      font-size: 10.5px;
+      font-size: var(--t-micro);
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: #6b6b6b;
-      margin: 32px 0 12px;
+      margin: 34px 0 14px;
       border-bottom: 1px solid #d4d4d4;
       padding-bottom: 8px;
     }
@@ -169,22 +260,39 @@
     }
 
     .card-body { display: flex; flex-direction: column; gap: 8px; }
-    .card-title { font-size: 16px; font-weight: 600; margin: 0; color: #1a1a1a; }
-    .card-mfr { font-size: 13px; color: #6b6b6b; }
+    /* Card title — one step up (18.75px), 600 weight; leads on size alone. */
+    .card-title {
+      font-size: var(--t-up1);
+      font-weight: 600;
+      margin: 0;
+      color: #1a1a1a;
+      line-height: 1.12;
+      letter-spacing: -0.003em;
+    }
+    .card-mfr { font-size: var(--t-cap); color: #6b6b6b; letter-spacing: 0.01em; }
     .card-attrs {
       display: flex; flex-wrap: wrap;
-      gap: 12px;
-      font-size: 13px;
+      gap: 6px 18px;            /* tight rows, generous column gutter */
+      font-size: var(--t-cap);
       color: #4a4a4a;
       margin: 4px 0;
     }
-    .card-attrs strong { color: #1a1a1a; font-weight: 500; }
+    /* Labels recede to uppercase micro-caps; the value carries the line
+       (Lupton — smallest effective difference; one signal does the work). */
+    .card-attrs strong {
+      color: #8a8578;
+      font-weight: 600;
+      font-size: var(--t-micro);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .card-attrs span { font-variant-numeric: tabular-nums lining-nums; }
 
     .badge {
       display: inline-block;
-      font-size: 9.5px;
+      font-size: var(--t-micro);
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       padding: 2px 8px;
       border-radius: 2px;
@@ -194,11 +302,15 @@
     }
     .badge.alt { background: #6b6b6b; }
 
+    /* Product notes — the one true reading passage on the page. Constrain to a
+       measure (Bringhurst: 45–75 chars) and open the leading so it reads like a
+       spec paragraph, not a caption. base size, reading leading. */
     .card-notes {
-      font-size: 13px;
-      color: #4a4a4a;
-      line-height: 1.5;
-      margin: 4px 0 8px;
+      font-size: var(--t-base);
+      color: #3c3c3c;
+      line-height: var(--lh-read);
+      max-width: var(--measure);
+      margin: 4px 0 10px;
     }
 
     .card-actions {
@@ -232,6 +344,73 @@
     }
     .link-out:hover { color: #1a1a1a; border-color: #1a1a1a; }
 
+    /* Product link — Tier 2 (under mfr·model line) */
+    .product-link {
+      display: inline-block;
+      font-size: 13px;
+      color: #0a304e;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(10, 48, 78, 0.3);
+      transition: border-color 0.15s;
+    }
+    .product-link:hover { border-bottom-color: #0a304e; }
+
+    /* Component rows */
+    .comp-row {
+      display: grid;
+      grid-template-columns: 64px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: #fafaf8;
+      border: 1px solid #e8e8e6;
+      border-radius: 3px;
+      padding: 10px 12px;
+      margin-bottom: 6px;
+    }
+    .comp-thumb {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      background: #fafaf8;
+      border: 1px solid #e8e8e6;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .comp-thumb.no-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #bbb;
+    }
+    .comp-name { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+    .comp-name .comp-title {
+      font-size: var(--t-base);
+      font-weight: 600;
+      color: #1a1a1a;
+      line-height: 1.2;
+    }
+    .comp-name .comp-mfr {
+      font-size: var(--t-cap);
+      color: #6b6b6b;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .comp-name .comp-detail {
+      font-size: var(--t-cap);
+      color: #4a4a4a;
+    }
+    .comp-qty {
+      font-size: var(--t-cap);
+      color: #6b6b6b;
+      text-align: right;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
     /* Footer */
     footer.bot {
       margin-top: 48px;
@@ -244,11 +423,14 @@
       text-align: center;
     }
 
-    /* Mobile */
+    /* Mobile — hero steps down; logo steps down with it to keep the optical
+       balance at small size (Tschichold). Notes measure already caps below
+       the single-column width, so it reflows cleanly. */
     @media (max-width: 600px) {
+      :root { --t-hero: 26px; }
       .card { grid-template-columns: 1fr; }
       .card-image { max-width: 240px; margin: 0 auto; }
-      h1 { font-size: 19px; }
+      .ce-logo img { width: 54px; }
     }
 
     /* Empty-state */
@@ -366,7 +548,11 @@
             }
             // Collect alternates pointing to this primary (pp === id).
             const altRows = allItems.filter(it => it.pt === 'Alternative' && String(it.pp) === safeId);
+            // Collect components pointing to this primary (pp === id).
+            const compRows = allItems.filter(it => it.pt === 'Component' && String(it.pp) === safeId);
             // Transform flat list-row(s) into selection.html's primary+alts shape.
+            // url field in the manifest is the deep-link — NOT the product URL.
+            // pu field is the product URL; map to item.url for cardHtml to render.
             const toItem = (r, kind) => ({
               kind: kind,
               id: r.id,
@@ -376,10 +562,16 @@
               ti: r.ti,
               fi: r.fi,
               co: r.co,
-              msrp: r.msrp
+              msrp: r.msrp,
+              url: r.pu,       // product URL (pu), NOT the deep-link (r.url)
+              no: r.no,
+              ld: r.ld,
+              qt: r.qt,
+              un: r.un
             });
             data = {
               tm: row.tm,
+              st: row.st,
               ti: row.ti,
               pn: json.pn,
               ar: row.ar,
@@ -388,7 +580,8 @@
               ld: row.ld,
               slug: safeSlug,
               parentTitle: json.title,
-              items: [toItem(row, 'primary')].concat(altRows.map(a => toItem(a, 'alt')))
+              items: [toItem(row, 'primary')].concat(altRows.map(a => toItem(a, 'alt'))),
+              components: compRows.map(c => toItem(c, 'component'))
             };
             render(data);
           })
@@ -433,12 +626,19 @@
         }
 
         html += '<header class="top">';
-        html += '  <div class="brand">Crafted Earth &middot; Selection</div>';
+        html += '  <div class="masthead">';
+        html += '    <div class="masthead-left">';
+        html += '      <div class="brand">Selection</div>';
         // Back-link to project list (only when reached via ?p=&id= path)
         if (d.slug) {
           const backLabel = d.pn ? 'All ' + d.pn + ' selections' : 'All selections';
-          html += '  <a class="back-link" href="selections_list.html?p=' + escapeAttr(d.slug) + '">&larr; ' + escapeHtml(backLabel) + '</a>';
+          html += '      <a class="back-link" href="selections_list.html?p=' + escapeAttr(d.slug) + '">' + escapeHtml(backLabel) + '</a>';
         }
+        html += '    </div>';
+        html += '    <a class="ce-logo" href="https://craftedearth.com" target="_blank" rel="noopener" aria-label="Crafted Earth">';
+        html += '      <img src="ce-logo-dark.png" alt="Crafted Earth" width="72" height="72">';
+        html += '    </a>';
+        html += '  </div>';
         html += '  <div class="title-row">';
         if (d.tm) html += '    <span class="tm-chip">' + escapeHtml(d.tm) + '</span>';
         html += '    <h1>' + escapeHtml(d.ti || '') + '</h1>';
@@ -454,12 +654,19 @@
         html += cardHtml(primary, true, d);
 
         if (alts.length > 0) {
-          html += '<div class="section-label">Alternatives</div>';
+          html += '<div class="section-label">Alternatives &mdash; ' + alts.length + '</div>';
           alts.forEach(a => { html += cardHtml(a, false, d); });
         }
 
+        const comps = d.components || [];
+        if (comps.length > 0) {
+          html += '<div class="section-label">Components &mdash; ' + comps.length + '</div>';
+          // <!-- Optional future note: "These items are part of the assembly above — no separate approval needed." -->
+          comps.forEach(c => { html += compRowHtml(c); });
+        }
+
         html += '<footer class="bot">';
-        html += '  <div>Crafted Earth, Inc. &middot; San Rafael, CA &middot; CSL 1015145 &middot; PE C82156</div>';
+        html += '  <div>Crafted Earth, Inc. &middot; San Rafael, CA &middot; CA lic. B1015145 &middot; C82156</div>';
         html += '  <div style="margin-top:6px;">Approvals are sent by email and recorded with timestamp.</div>';
         html += '</footer>';
 
@@ -471,17 +678,32 @@
         const badge = isPrimary
           ? '<span class="badge">Primary</span>'
           : '<span class="badge alt">Alternative</span>';
+
+        // Graceful empty-product state: no make/mod/img — render TypeMark+title only
+        const hasProduct = item.make || item.mod || item.img;
+
         const mfrModel = [item.make, item.mod ? 'Model ' + item.mod : null].filter(Boolean).join(' · ');
+
+        // Product link — Tier 2 (under mfr·model line). Split on <br> and take first.
+        let productUrl = item.url || '';
+        if (productUrl) {
+          productUrl = productUrl.split(/<br\s*\/?>/i)[0].trim();
+        }
+        const productLinkHtml = productUrl
+          ? '<a class="product-link" href="' + escapeAttr(productUrl) + '" target="_blank" rel="noopener noreferrer">View on manufacturer site &#8599;</a>'
+          : '';
+
+        // Expanded attrs — omit any null/undefined/''/falsy field. msrp===0 is valid.
         const attrs = [];
         if (item.fi) attrs.push('<span><strong>Finish:</strong> ' + escapeHtml(item.fi) + '</span>');
         if (item.co) attrs.push('<span><strong>Collection:</strong> ' + escapeHtml(item.co) + '</span>');
-        if (item.msrp || item.msrp === 0) attrs.push('<span><strong>List:</strong> $' + escapeHtml(formatMoney(item.msrp)) + '</span>');
+        if (item.qt) attrs.push('<span><strong>Qty:</strong> ' + escapeHtml(String(item.qt)) + (item.un ? ' ' + escapeHtml(item.un) : '') + '</span>');
+        if (item.ld) attrs.push('<span><strong>Lead time:</strong> ' + escapeHtml(String(item.ld)) + ' days</span>');
+        if (item.msrp || item.msrp === 0) attrs.push('<span><strong>List price:</strong> $' + escapeHtml(formatMoney(item.msrp)) + '</span>');
+
         const imgHtml = item.img
           ? '<img class="card-image" src="' + escapeAttr(item.img) + '" alt="' + escapeAttr(item.ti || '') + '" onerror="this.classList.add(\'no-image\');this.removeAttribute(\'src\');" />'
           : '<div class="card-image no-image">No image</div>';
-        const specLink = item.url
-          ? '<a class="link-out" href="' + escapeAttr(item.url) + '" target="_blank" rel="noopener noreferrer">View product spec</a>'
-          : '';
 
         return [
           '<div class="' + cls + '">',
@@ -489,14 +711,40 @@
             '<div class="card-body">',
               '<div>' + badge + '</div>',
               '<p class="card-title">' + escapeHtml(item.ti || '') + '</p>',
-              mfrModel ? '<div class="card-mfr">' + escapeHtml(mfrModel) + '</div>' : '',
+              hasProduct && mfrModel ? '<div class="card-mfr">' + escapeHtml(mfrModel) + '</div>' : '',
+              productLinkHtml,
               attrs.length ? '<div class="card-attrs">' + attrs.join('') + '</div>' : '',
               item.no ? '<p class="card-notes">' + escapeHtml(item.no) + '</p>' : '',
-              '<div class="card-actions">',
-                '<a class="btn" href="' + buildMailto(item, d) + '" target="_blank" rel="noopener">Approve this Design Selection</a>',
-                specLink,
-              '</div>',
+              // Approve only when this selection slot is still Proposed (an action is pending).
+              // Decided items (Selected/Ordered/Installed/...) show no Approve button.
+              (!d.st || d.st === 'Proposed')
+                ? '<div class="card-actions"><a class="btn" href="' + buildMailto(item, d) + '" target="_blank" rel="noopener">Approve this Design Selection</a></div>'
+                : '',
             '</div>',
+          '</div>'
+        ].join('');
+      }
+
+      function compRowHtml(item) {
+        const thumbHtml = item.img
+          ? '<img class="comp-thumb" src="' + escapeAttr(item.img) + '" alt="' + escapeAttr(item.ti || '') + '" onerror="this.classList.add(\'no-image\');this.removeAttribute(\'src\');" />'
+          : '<div class="comp-thumb no-image">No image</div>';
+
+        const mfrMod = [item.make, item.mod].filter(Boolean).join(' · ');
+        const finColl = [item.fi, item.co].filter(Boolean).join(' · ');
+
+        // Qty: suppress if falsy (qty=0 also suppressed per spec)
+        const qtyHtml = item.qt ? '<div class="comp-qty">' + escapeHtml(String(item.qt)) + (item.un ? ' ' + escapeHtml(item.un) : '') + '</div>' : '';
+
+        return [
+          '<div class="comp-row">',
+            thumbHtml,
+            '<div class="comp-name">',
+              '<div class="comp-title">' + escapeHtml(item.ti || '') + '</div>',
+              mfrMod ? '<div class="comp-mfr">' + escapeHtml(mfrMod) + '</div>' : '',
+              finColl ? '<div class="comp-detail">' + escapeHtml(finColl) + '</div>' : '',
+            '</div>',
+            qtyHtml,
           '</div>'
         ].join('');
       }

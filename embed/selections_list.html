@@ -36,25 +36,20 @@
 
   {
     "title": "33 Estelle Ave — Selections",        // optional, overrides default header text
-    "slug":  "33-estelle",                         // optional, used for ?p=&id= deep-link composition
     "pn":    "33 Estelle Ave",                     // optional project context (omit for multi-project)
     "gen":   "2026-05-15",                         // optional generated-date string (free-form)
     "items": [
       {
         "id":   163,                               // Purchase ID
-        "pt":   "Primary",                         // Purchase Type — "Primary" | "Alternative".
-                                                   //   Alternative rows live in the payload (for
-                                                   //   selection.html ?p=&id= mode) but never render
-                                                   //   in the list view.
-        "pp":   162,                               // (Alternative only) Parent purchase id.
-        "st":   "Proposed",                        // Shipment Status (REQUIRED for Primary — drives
-                                                   //   sort + filter). Known values: "Placeholder",
-                                                   //   "Proposed", "Selected", "Ordered", "Received",
+        "st":   "Proposed",                        // Shipment Status (REQUIRED — drives sort + filter)
+                                                   //   Known values: "Placeholder", "Proposed",
+                                                   //   "Selected", "Ordered", "Received",
                                                    //   "Installed", "Cancelled".
                                                    //   "Selected" = design selection locked in.
-                                                   //   ("Approved" is a future cost-review gate.)
-                                                   //   Legacy "Selected/Approved" → "Selected".
-                                                   //   Blank/null → "Placeholder" (collapsed at top).
+                                                   //   ("Approved" is a future cost-review gate, NOT here.)
+                                                   //   Legacy "Selected/Approved" is mapped to "Selected".
+                                                   //   Blank/null is treated as "Placeholder".
+                                                   //   Placeholder section renders collapsed at top.
         "tm":   "SS08",                            // Type Mark
         "ti":   "TOILET PAPER HOLDER",             // Item title
         "ar":   "En Suite Bathroom",               // Area
@@ -65,8 +60,8 @@
         "fi":   "Matte Black",                     // Optional Finish/Color
         "co":   "Occasion",                        // Optional Collection
         "msrp": 189.00,                            // Optional list price (number)
-        "url":  "selection.html?p=33-estelle&id=163"
-                                                   // Pre-built deep-link to detail page (REQUIRED).
+        "url":  "https://ericspletzer.github.io/crafted-earth-product-images/embed/selection.html?d=..."
+                                                   // Pre-built deep-link to detail page (REQUIRED for click-through)
       },
       ...
     ]
@@ -79,80 +74,255 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Crafted Earth — Selections List</title>
   <style>
+    /* Self-hosted EB Garamond — CE print/equation brand serif, no third-party dependency */
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url('eb-garamond.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ── Type scale ──────────────────────────────────────────────────────────
+       Modular scale, major-third ratio (1.25), anchored on a 15px body.
+       Steps named by role, not size, so hierarchy stays a system — not ad-hoc
+       numbers. Bringhurst: choose a scale and hold to it.
+         step −2  9.6px   micro caps (badges, counts)
+         step −1  12px    captions, meta, attrs
+         base     15px    body / card title backbone
+         step +1  18.75px  card title (display sans)
+         step +2  23.44px  (reserved)
+         step +3  29.3px   (mobile h1)
+         hero     38px    project title (Garamond) — set optically, off-ladder
+       Two leading values: tight for display, open (1.5) for reading measure. */
+    :root {
+      --f-serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
+      --f-sans: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --f-mono: 'Consolas', 'Monaco', monospace;
+
+      --t-micro: 9.6px;   /* step −2 */
+      --t-cap:   12px;    /* step −1 */
+      --t-base:  15px;    /* base    */
+      --t-up1:   18.75px; /* step +1 */
+      --t-up2:   23.44px; /* step +2 */
+      --t-hero:  38px;    /* project title */
+
+      --lh-tight: 1.08;   /* display leading */
+      --lh-read:  1.55;   /* reading leading (notes) */
+      --measure:  66ch;   /* optimal reading measure (Bringhurst 45–75) */
+    }
+
     html, body {
-      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: var(--f-sans);
       background: #f4f3ef;
       color: #1a1a1a;
-      font-size: 15px;
+      font-size: var(--t-base);
       line-height: 1.5;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     .wrap { max-width: 880px; margin: 0 auto; padding: 24px 16px 64px; }
 
-    /* Header — matches selection.html */
+    /* ── Top band ──────────────────────────────────────────────────────────── */
     header.top {
-      border-bottom: 1px solid #1a1a1a;
+      border-bottom: 1px solid #c4c0b5;   /* warm hairline — structure without heavy ink */
       padding-bottom: 16px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
+
+    /* Masthead: stacked text block left, CE stamp right — one compact unit.
+       align-items:flex-start so the heavier stamp top-aligns with the eyebrow
+       cap-line, anchoring the corner (Tschichold: the mark holds its station). */
+    .masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    .masthead-text { min-width: 0; }
+
+    /* Eyebrow — quiet document label (the only place the word "Selections" lives).
+       Set at micro step; the wide tracking is what carries the formality. */
     .brand {
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #6b6b6b;
-    }
-    h1 {
-      font-size: 22px;
+      font-size: var(--t-micro);
       font-weight: 600;
-      margin: 4px 0 0;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      color: #9a9a9a;
+      margin-bottom: 9px;
+      line-height: 1;
     }
+
+    /* Project title — the single hero. EB Garamond ties the web viewer to the
+       print brand; reads like an architectural project sheet, not a web app.
+       Optical sizing + slight negative tracking tightens the large serif. */
+    h1 {
+      font-family: var(--f-serif);
+      font-size: var(--t-hero);
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      color: #1a1a1a;
+      line-height: var(--lh-tight);
+      margin: 0;
+      font-feature-settings: "liga" 1, "kern" 1;
+    }
+
+    /* Provenance line — relocated to the filter zone (see .meta-inline).
+       Legacy in-stack .meta kept only as a defensive fallback. */
     .meta {
       margin-top: 8px;
-      font-size: 13px;
-      color: #4a4a4a;
+      font-size: var(--t-cap);
+      font-weight: 400;
+      color: #9a9a9a;
+      letter-spacing: 0.02em;
     }
-    .meta span + span::before { content: " \00b7 "; color: #b0b0b0; }
+    .meta span + span::before { content: " \00b7 "; color: #cfcabd; }
+
+    /* CE stamp — heritage mark. Dark ink, larger, real opacity: a true optical
+       counterweight to the 38px Garamond title (Tschichold's dynamic
+       equilibrium — asymmetric, but in balance). */
+    .ce-logo {
+      flex-shrink: 0;
+      display: block;
+      line-height: 0;             /* kill descender gap under img */
+      margin-top: -2px;           /* nudge cap of stamp to eyebrow cap-line */
+    }
+    .ce-logo img {
+      display: block;
+      width: 72px;
+      height: auto;
+      opacity: 0.62;
+    }
 
     /* Top filter bar */
     .top-actions {
       margin-top: 16px;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
       flex-wrap: wrap;
     }
     .filter-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 0;
       font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #0a304e;
       background: transparent;
       border: 1px solid #0a304e;
-      padding: 7px 14px;
+      padding: 5px 10px;
       border-radius: 2px;
       cursor: pointer;
       transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
     }
     .filter-btn:hover { background: rgba(10, 48, 78, 0.08); }
     .filter-btn.active {
       background: #0a304e;
       color: #fff;
     }
-    .filter-btn .count {
+    /* Placeholder chip — muted treatment */
+    .filter-btn.chip-placeholder {
+      color: #b0b0b0;
+      border-color: #d4d4d4;
+    }
+    .filter-btn.chip-placeholder:hover { background: rgba(176, 176, 176, 0.1); }
+    .filter-btn.chip-placeholder.active {
+      background: #b0b0b0;
+      color: #fff;
+      border-color: #b0b0b0;
+    }
+    .chip-rule {
+      display: inline-block;
+      width: 1px;
+      height: 11px;
+      background: #d4d4d4;
+      margin: 0 7px;
+      vertical-align: middle;
+    }
+    .filter-btn.active .chip-rule { background: rgba(255,255,255,0.35); }
+    .filter-btn.chip-placeholder.active .chip-rule { background: rgba(255,255,255,0.35); }
+    .chip-count {
       font-weight: 500;
       opacity: 0.75;
       font-size: 11px;
     }
-    .filter-btn.active .count { opacity: 0.85; }
+    .filter-btn.active .chip-count { opacity: 0.85; }
+    .show-all-link {
+      font-size: 11px;
+      color: #0a304e;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-left: 8px;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 0;
+    }
+    .show-all-link:hover { color: #06243d; }
+
+    /* .masthead and .ce-logo are defined in the top-band block above */
+
+    /* Area filter — second, smaller row below the status chips.
+       The relocated "Updated …" date rides the far right of this row, baseline
+       aligned to the chips, so the title stack above gets pure vertical air. */
+    .area-actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+      flex-wrap: wrap;
+    }
+    .area-chips-group {
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+    /* Relocated provenance — right-aligned metadata, quietest tier */
+    .meta-inline {
+      margin-left: auto;
+      align-self: baseline;
+      font-size: var(--t-cap);
+      font-weight: 400;
+      color: #9a9a9a;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      padding-left: 12px;
+    }
+    .area-chip {
+      font-family: inherit;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #6b6b6b;
+      background: transparent;
+      border: 1px solid #c4c4c4;
+      padding: 4px 9px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .area-chip:hover { border-color: #6b6b6b; }
+    .area-chip.active {
+      background: #6b6b6b;
+      border-color: #6b6b6b;
+      color: #fff;
+    }
+    .area-chip .area-count {
+      font-weight: 500;
+      opacity: 0.7;
+      margin-left: 5px;
+    }
+    .area-chip.active .area-count { opacity: 0.85; }
 
     /* Section label — matches selection.html */
     .section-label {
@@ -197,7 +367,7 @@
     }
     details.section-collapsible > summary::-webkit-details-marker { display: none; }
     details.section-collapsible > summary::before {
-      content: "\25B6";          /* triangle right */
+      content: "\25B6";          /* ▶ */
       font-size: 9px;
       color: #b0b0b0;
       transition: transform 0.15s;
@@ -206,7 +376,7 @@
       width: 12px;
     }
     details[open].section-collapsible > summary::before {
-      content: "\25BC";          /* triangle down */
+      content: "\25BC";          /* ▼ */
     }
     details.section-collapsible > summary:hover { color: #1a1a1a; }
     details.section-collapsible > summary:hover::before { color: #0a304e; }
@@ -271,33 +441,52 @@
     .card-body {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       min-width: 0;
     }
+    /* Row 1 = status tag + type mark. A thin rule between them keeps the eye
+       moving; baseline alignment ties the mono TM to the tag caps. */
     .card-row1 {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
+      margin-bottom: 1px;
     }
+    /* Status tag — demoted from a filled chip to a quiet OUTLINE tag. The
+       status is already declared by the section header (and, for Proposed, the
+       2px border), so the per-card tag should carry the color code without
+       competing with the title for ink. Lupton: reduce the signal, keep the
+       information. A small status dot + label reads as a key, not a shout. */
     .badge {
-      display: inline-block;
-      font-size: 9.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: var(--t-micro);
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 2px;
-      background: #6b6b6b;
-      color: #fff;
+      padding: 0;
+      background: transparent;
+      color: #8a8578;
     }
-    .badge.placeholder    { background: #b0b0b0; }
-    .badge.proposed       { background: #0a304e; }
-    .badge.selected       { background: #2d6b3e; }
-    .badge.ordered        { background: #8a6b22; }
-    .badge.received       { background: #4a4a4a; }
-    .badge.installed      { background: #1f4d2c; }
-    .badge.cancelled      { background: #b0392f; }
+    .badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #6b6b6b;
+      flex-shrink: 0;
+    }
+    .badge.placeholder::before { background: #b0b0b0; }
+    .badge.proposed::before    { background: #0a304e; }
+    .badge.selected::before    { background: #2d6b3e; }
+    .badge.ordered::before     { background: #8a6b22; }
+    .badge.received::before    { background: #4a4a4a; }
+    .badge.installed::before   { background: #1f4d2c; }
+    .badge.cancelled::before   { background: #b0392f; }
+    .badge.proposed  { color: #0a304e; }
+    .badge.cancelled { color: #b0392f; }
 
     /* Placeholder cards — muted treatment so they read as "not yet ready" */
     .card.status-placeholder {
@@ -309,24 +498,30 @@
     .card.status-placeholder:hover { opacity: 1; }
 
     .tm {
-      font-family: 'Consolas', 'Monaco', monospace;
-      font-size: 13px;
+      font-family: var(--f-mono);
+      font-size: var(--t-cap);
       font-weight: 700;
       color: #0a304e;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.04em;
     }
+    /* Card title — the per-row hero, one step up (18.75px) so it leads the row
+       on size alone; weight drops to 600. Lupton's smallest effective
+       difference: lead with ONE clear signal (size), not size + weight + color. */
     .card-title {
-      font-size: 15px;
+      font-size: var(--t-up1);
       font-weight: 600;
       color: #1a1a1a;
       margin: 0;
+      line-height: 1.12;
+      letter-spacing: -0.003em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     .card-mfr {
-      font-size: 13px;
+      font-size: var(--t-cap);
       color: #6b6b6b;
+      letter-spacing: 0.01em;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -334,13 +529,19 @@
     .card-attrs {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      font-size: 12px;
+      gap: 6px 16px;          /* tighter row rhythm, generous column gutter */
+      font-size: var(--t-cap);
       color: #4a4a4a;
       margin-top: auto;
     }
-    .card-attrs strong { color: #1a1a1a; font-weight: 500; }
-    .card-attrs span { white-space: nowrap; }
+    .card-attrs strong {
+      color: #8a8578;          /* label recedes; value carries (smallest diff) */
+      font-weight: 600;
+      font-size: var(--t-micro);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .card-attrs span { white-space: nowrap; font-variant-numeric: tabular-nums lining-nums; }
 
     .card-cta {
       display: flex;
@@ -370,23 +571,30 @@
       text-align: center;
     }
 
-    /* Mobile */
+    /* Mobile — hero steps down the ladder; logo steps down with it so the
+       optical balance holds at small size (Tschichold: equilibrium is
+       size-relative). Date keeps its own line when chips wrap. */
     @media (max-width: 600px) {
+      :root { --t-hero: 28px; }     /* step the project title down (≈ +3) */
       .card {
-        grid-template-columns: 96px 1fr;
+        grid-template-columns: 88px 1fr;
         gap: 12px;
         padding: 12px;
       }
       .card.status-proposed { padding: 11px; }
-      .card-image { max-width: 96px; }
+      .card-image { max-width: 88px; }
       .card-cta {
         grid-column: 1 / -1;
         justify-content: flex-end;
-        padding-top: 4px;
+        padding-top: 6px;
         border-top: 1px solid #f0f0f0;
       }
-      .card-title { font-size: 14px; white-space: normal; }
-      h1 { font-size: 19px; }
+      /* Title wraps on mobile (no ellipsis) and drops one step to base+ */
+      .card-title { font-size: var(--t-base); white-space: normal; line-height: 1.2; }
+      .ce-logo img { width: 54px; }
+      /* When the area row wraps, let the date sit on its own full-width line
+         at the right rather than crushing against the last chip. */
+      .meta-inline { margin-left: auto; padding-left: 0; }
     }
 
     /* Empty-state */
@@ -437,7 +645,7 @@
     (function () {
       // ---- Status ordering & display --------------------------------------
       // Sort order — Placeholder first (collapsed peek), then Proposed (needs
-      // action), then selected/ordered/received/installed/cancelled.
+      // action), then approved/ordered/received/installed/cancelled.
       const STATUS_ORDER = [
         'Placeholder',
         'Proposed',
@@ -602,8 +810,12 @@
       const projectSlug = params.get('p');
 
       let data;
-      // Filter state — 'all' or 'proposed'
-      let filterMode = 'all';
+      // Filter state — array of active status strings. Default: ['Proposed'].
+      // Falls back to all chips active if no Proposed items exist.
+      let activeStatuses = ['Proposed'];
+      // Area filter state — null until first render, then array of active areas.
+      // Default: all areas active (= no area restriction).
+      let activeAreas = null;
 
       if (rawInline) {
         try {
@@ -650,24 +862,60 @@
       function renderAll() {
         const d = data;
         const root = document.getElementById('root');
-        // Primary-only filter — alternates (pt === 'Alternative') live in the
-        // payload so selection.html can render them when reached via ?p=&id=,
-        // but the list page never shows them as standalone rows.
+        // Primary-only filter — Alternatives and Components live in the payload
+        // for selection.html's detail view but never appear as list rows.
         const items = (d.items || [])
           .filter(it => !it.pt || it.pt === 'Primary')
           .map(it => Object.assign({}, it, { st: normalizeStatus(it.st) }));
-        const proposedCount = items.filter(i => i.st === 'Proposed').length;
-        const totalCount = items.length;
 
-        const titleText = d.title || (d.pn ? d.pn + ' — Selections' : 'Selections');
+        // Compute per-status counts for chips (only statuses present in data)
+        const statusCounts = {};
+        items.forEach(it => {
+          statusCounts[it.st] = (statusCounts[it.st] || 0) + 1;
+        });
+        // Ordered list of statuses present in data
+        const presentStatuses = STATUS_ORDER.filter(s => statusCounts[s]);
+        Object.keys(statusCounts).forEach(s => {
+          if (presentStatuses.indexOf(s) === -1) presentStatuses.push(s);
+        });
 
-        const metaParts = [];
-        if (d.pn && !d.title) metaParts.push(d.pn);
-        if (d.gen) metaParts.push(d.gen);
-        const meta = metaParts.map(s => '<span>' + escapeHtml(s) + '</span>').join('');
+        // Default-on-load: only 'Proposed' active. Fall back to all if no Proposed.
+        // Re-validate activeStatuses against what's actually present; remove stale entries.
+        activeStatuses = activeStatuses.filter(s => presentStatuses.indexOf(s) !== -1);
+        if (activeStatuses.length === 0) {
+          if (statusCounts['Proposed']) {
+            activeStatuses = ['Proposed'];
+          } else {
+            activeStatuses = presentStatuses.slice();
+          }
+        }
+
+        // Area facets — an item may carry multiple comma-joined areas.
+        function itemAreas(it) {
+          return (it.ar || '').split(',').map(s => s.trim()).filter(Boolean);
+        }
+        const areaCounts = {};
+        items.forEach(it => itemAreas(it).forEach(a => {
+          areaCounts[a] = (areaCounts[a] || 0) + 1;
+        }));
+        const presentAreas = Object.keys(areaCounts).sort();
+        // Default: all areas active. Re-validate against present (drop stale).
+        if (activeAreas === null) {
+          activeAreas = presentAreas.slice();
+        } else {
+          activeAreas = activeAreas.filter(a => presentAreas.indexOf(a) !== -1);
+          if (activeAreas.length === 0) activeAreas = presentAreas.slice();
+        }
+        // Area filter only constrains the list when a strict subset is active.
+        const areaFilterActive = activeAreas.length < presentAreas.length;
+
+        // Hero = project name only. "Selections" lives in the eyebrow — never duplicated here.
+        const titleText = d.pn || (d.title ? d.title.replace(/\s*[—–-]\s*Selections\s*$/i, '').trim() : 'Selections');
+
+        // Provenance — humanized, meaningfully labeled date (not a raw ISO string).
+        const meta = d.gen ? '<span>Updated ' + escapeHtml(fmtDate(d.gen)) + '</span>' : '';
 
         // Detect iframe context — banner only shown when embedded.
-        // Wrapped in try/catch because cross-origin iframes throw on window.top.
         let inIframe = false;
         try { inIframe = window.top !== window.self; }
         catch (e) { inIframe = true; }
@@ -682,23 +930,78 @@
         }
 
         html += '<header class="top">';
-        html += '  <div class="brand">Crafted Earth &middot; Selections</div>';
-        html += '  <h1>' + escapeHtml(titleText) + '</h1>';
-        if (meta) html += '  <div class="meta">' + meta + '</div>';
-        html += '  <div class="top-actions">';
-        html += '    <button type="button" class="filter-btn' + (filterMode === 'all' ? ' active' : '') + '" data-filter="all">All <span class="count">' + totalCount + '</span></button>';
-        html += '    <button type="button" class="filter-btn' + (filterMode === 'proposed' ? ' active' : '') + '" data-filter="proposed">Proposed <span class="count">' + proposedCount + '</span></button>';
+        html += '  <div class="masthead">';
+        html += '    <div class="masthead-text">';
+        html += '      <div class="brand">Selections</div>';
+        html += '      <h1>' + escapeHtml(titleText) + '</h1>';
+        html += '    </div>';
+        html += '    <a class="ce-logo" href="https://craftedearth.com" target="_blank" rel="noopener" aria-label="Crafted Earth">';
+        html += '      <img src="ce-logo-dark.png" alt="Crafted Earth" width="72" height="72">';
+        html += '    </a>';
         html += '  </div>';
+
+        // Filter chips — one per status present in data
+        html += '  <div class="top-actions">';
+        presentStatuses.forEach(function(s) {
+          const isActive = activeStatuses.indexOf(s) !== -1;
+          const isPlaceholder = s === 'Placeholder';
+          const chipCls = 'filter-btn' +
+            (isPlaceholder ? ' chip-placeholder' : '') +
+            (isActive ? ' active' : '');
+          const label = s.toUpperCase();
+          const count = statusCounts[s] || 0;
+          html += '<button type="button" class="' + chipCls + '" data-status="' + escapeAttr(s) + '">';
+          html += escapeHtml(label);
+          html += '<span class="chip-rule"></span>';
+          html += '<span class="chip-count">' + count + '</span>';
+          html += '</button>';
+        });
+        // "Show all" link — visible only when ≥1 chip is inactive
+        const allActive = activeStatuses.length === presentStatuses.length;
+        if (!allActive) {
+          html += '<button type="button" class="show-all-link" id="show-all-btn">Show all</button>';
+        }
+        html += '  </div>';
+
+        // Area filter — second, smaller row (only when >1 area present). The
+        // relocated provenance date rides the far right of this row, baseline
+        // aligned to the area chips (Eric's relocation ask). When there is no
+        // area row (≤1 area), the date renders on its own right-aligned row so
+        // the title stack still stays free of it.
+        if (presentAreas.length > 1) {
+          html += '  <div class="area-actions">';
+          html += '    <div class="area-chips-group">';
+          presentAreas.forEach(function(a) {
+            const isActive = activeAreas.indexOf(a) !== -1;
+            html += '<button type="button" class="area-chip' + (isActive ? ' active' : '') + '" data-area="' + escapeAttr(a) + '">';
+            html += escapeHtml(a);
+            html += '<span class="area-count">' + (areaCounts[a] || 0) + '</span>';
+            html += '</button>';
+          });
+          if (areaFilterActive) {
+            html += '<button type="button" class="show-all-link" id="all-areas-btn">All areas</button>';
+          }
+          html += '    </div>';
+          if (meta) html += '    <div class="meta-inline">' + meta + '</div>';
+          html += '  </div>';
+        } else if (meta) {
+          html += '  <div class="area-actions"><div class="area-chips-group"></div><div class="meta-inline">' + meta + '</div></div>';
+        }
         html += '</header>';
 
-        // Visible item set
-        const visible = filterMode === 'proposed'
-          ? items.filter(i => i.st === 'Proposed')
-          : items;
+        // Visible item set — status AND area (area only constrains when a subset is active)
+        const visible = items.filter(i =>
+          activeStatuses.indexOf(i.st) !== -1 &&
+          (!areaFilterActive || itemAreas(i).some(a => activeAreas.indexOf(a) !== -1))
+        );
 
         if (visible.length === 0) {
           html += '<div class="empty-filtered">';
-          html += '  <p>No ' + escapeHtml(filterMode) + ' selections.</p>';
+          if (activeStatuses.length === 1 && !areaFilterActive) {
+            html += '  <p>No ' + escapeHtml(activeStatuses[0]) + ' selections.</p>';
+          } else {
+            html += '  <p>No selections match the current filter.</p>';
+          }
           html += '</div>';
         } else {
           // Group by status in canonical order
@@ -732,23 +1035,72 @@
         }
 
         html += '<footer class="bot">';
-        html += '  <div>Crafted Earth, Inc. &middot; San Rafael, CA &middot; CSL 1015145 &middot; PE C82156</div>';
+        html += '  <div>Crafted Earth, Inc. &middot; San Rafael, CA &middot; CA lic. B1015145 &middot; C82156</div>';
         html += '  <div style="margin-top:6px;">Click any selection to review and approve.</div>';
         html += '</footer>';
 
         root.innerHTML = html;
 
-        // Wire filter buttons
-        root.querySelectorAll('.filter-btn').forEach(btn => {
+        // Wire filter chips — multi-select toggle
+        root.querySelectorAll('.filter-btn[data-status]').forEach(btn => {
           btn.addEventListener('click', function (e) {
             e.preventDefault();
-            const next = btn.getAttribute('data-filter');
-            if (next !== filterMode) {
-              filterMode = next;
-              renderAll();
+            const s = btn.getAttribute('data-status');
+            const idx = activeStatuses.indexOf(s);
+            if (idx !== -1) {
+              // Deactivate — but never leave activeStatuses empty
+              if (activeStatuses.length > 1) {
+                activeStatuses = activeStatuses.filter(x => x !== s);
+              }
+            } else {
+              activeStatuses = activeStatuses.concat([s]);
             }
+            renderAll();
           });
         });
+
+        // Wire "Show all" link
+        const showAllBtn = document.getElementById('show-all-btn');
+        if (showAllBtn) {
+          showAllBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            // Re-compute presentStatuses from items (avoid stale closure)
+            const sc = {};
+            items.forEach(it => { sc[it.st] = true; });
+            activeStatuses = STATUS_ORDER.filter(s => sc[s]);
+            Object.keys(sc).forEach(s => {
+              if (activeStatuses.indexOf(s) === -1) activeStatuses.push(s);
+            });
+            renderAll();
+          });
+        }
+
+        // Wire area chips — multi-select toggle (never empties; "All areas" resets)
+        root.querySelectorAll('.area-chip[data-area]').forEach(btn => {
+          btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const a = btn.getAttribute('data-area');
+            const idx = activeAreas.indexOf(a);
+            if (idx !== -1) {
+              if (activeAreas.length > 1) activeAreas = activeAreas.filter(x => x !== a);
+            } else {
+              activeAreas = activeAreas.concat([a]);
+            }
+            renderAll();
+          });
+        });
+
+        // Wire "All areas" reset
+        const allAreasBtn = document.getElementById('all-areas-btn');
+        if (allAreasBtn) {
+          allAreasBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            const ac = {};
+            items.forEach(it => itemAreas(it).forEach(a => { ac[a] = true; }));
+            activeAreas = Object.keys(ac).sort();
+            renderAll();
+          });
+        }
       }
 
       function cardHtml(item, d) {
@@ -805,6 +1157,14 @@
       }
 
       // ---- Helpers --------------------------------------------------------
+      // "2026-05-28" → "May 28, 2026" (parse parts manually — no timezone drift).
+      function fmtDate(s) {
+        const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(s || '').trim());
+        if (!m) return String(s || '');
+        const months = ['January','February','March','April','May','June',
+                        'July','August','September','October','November','December'];
+        return months[(+m[2]) - 1] + ' ' + (+m[3]) + ', ' + m[1];
+      }
       function formatMoney(n) {
         const num = Number(n);
         if (!isFinite(num)) return '';
