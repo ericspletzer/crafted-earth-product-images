@@ -4,8 +4,8 @@
   Project:  880 Wendy Lane (David & Keira Dines)
   TypeMark: HV02
   Item:     Floor to Floor Air Mixer
-  Generated: 2026-05-29 by Quartermaster
-  Matches style of selection.html (same CSS, same card pattern).
+  Revised:  2026-05-29 by Quartermaster — new primary (AIRTAP T4 in-floor register fan);
+            Inkbird + TerraBloom removed; ASLL + TW408 added.
   Static payload — no ?d= param needed.
 -->
 <html lang="en">
@@ -282,7 +282,7 @@
     }
     .product-link:hover { border-bottom-color: #0a304e; }
 
-    /* Smart control tag — inline highlight for WiFi/relay notes */
+    /* Control / install type tags */
     .ctrl-tag {
       display: inline-block;
       font-size: var(--t-micro);
@@ -297,6 +297,8 @@
     .ctrl-wifi   { background: #e1f0e8; color: #1a6640; }
     .ctrl-relay  { background: #fdf3dc; color: #7a5200; }
     .ctrl-smart  { background: #e8eef6; color: #0a304e; }
+    .ctrl-floor  { background: #f0ebe0; color: #5a3e00; }
+    .ctrl-wall   { background: #ece8f0; color: #3a2060; }
 
     footer.bot {
       margin-top: 48px;
@@ -349,30 +351,32 @@
   ════════════════════════════════════════════════════════════════ -->
   <div class="section-label">Primary Selection</div>
 
+  <!-- PRIMARY: Tjernlund ASLL — purpose-built inter-floor -->
   <div class="card primary">
-    <img class="card-image" src="img/880-wendy/ac-infinity-t4.jpg" alt="AC Infinity CLOUDLINE T4 inline duct fan" loading="lazy">
+    <img class="card-image" src="img/880-wendy/tjernlund-asll.jpg" alt="Tjernlund ASLL AireShare Level-to-Level transfer fan" loading="lazy">
     <div class="card-body">
       <div><span class="badge">Primary</span></div>
-      <p class="card-title">CLOUDLINE T4 Quiet 4&rdquo; Inline Duct Fan with Temp, Humidity &amp; WiFi Controller</p>
-      <div class="card-mfr">AC Infinity &middot; Model AI-CLT4</div>
-      <a class="product-link" href="https://acinfinity.com/cloudline-t4-quiet-inline-fan-4-with-temperature-humidity-vpd-controller/" target="_blank" rel="noopener noreferrer">View on manufacturer site &#8599;</a>
+      <p class="card-title">AireShare ASLL Level-to-Level Transfer Fan &mdash; 75 CFM Hardwired</p>
+      <div class="card-mfr">Tjernlund &middot; Model ASLL</div>
+      <a class="product-link" href="https://shop.tjernlund.com/products/asll" target="_blank" rel="noopener noreferrer">View on manufacturer site &#8599;</a>
       <div class="card-attrs">
-        <span><strong>CFM</strong> 205</span>
-        <span><strong>Noise</strong> 28 dBA</span>
-        <span><strong>Duct</strong> 4&rdquo;</span>
-        <span><strong>Dimensions</strong> 7.4 &times; 11.9 &times; 6.9 in</span>
-        <span><strong>Power</strong> 28 W max / 21 W avg</span>
-        <span><strong>List price</strong> $119.00</span>
-        <span><strong>Lead time</strong> 3&ndash;5 days (Amazon Prime)</span>
+        <span><strong>CFM</strong> 75</span>
+        <span><strong>Noise</strong> 1.15 sones</span>
+        <span><strong>Install</strong> Joist cavity &mdash; ceiling grille below + floor register above</span>
+        <span><strong>Joist depth</strong> 8.75&ndash;16.5 in (adjustable sleeve)</span>
+        <span><strong>Power</strong> 25 W hardwired 120V</span>
+        <span><strong>List price</strong> ~$177 (Home Depot) &middot; $325 (Tjernlund direct)</span>
+        <span><strong>Lead time</strong> ~2 weeks</span>
         <span><strong>Keynote</strong> 23 37 00</span>
-        <span><strong>Library ID</strong> Product #710 &middot; Purchase #339</span>
+        <span><strong>Library ID</strong> Product #716 &middot; Purchase #345</span>
       </div>
       <p class="card-notes">
-        <span class="ctrl-tag ctrl-wifi">WiFi Native</span>
-        Best overall fit for 880 Wendy. 4&rdquo; inline EC fan installs in the mini-split chase cavity &mdash; inlet via drywall ceiling/wall collar, outlet via 4&rdquo; floor register boot to the upper floor. At 205 CFM it moves enough air across 370 sf without being overpowered. Native WiFi via the <strong>AC Infinity app</strong> (iOS/Android) supports temperature and humidity triggers: set a threshold (e.g., activate when lower floor rises above 72&deg;F) to approximate mini-split runtime without hardwiring. Timer and schedule modes also available. A Shelly 1 relay on the 120 V supply line gives an additional smart-home automation path if a hard link to the mini-split&rsquo;s 24 V thermostat signal is preferred. ETL listed. 2-year warranty.
+        <span class="ctrl-tag ctrl-floor">Inter-Floor Native</span>
+        <span class="ctrl-tag ctrl-smart">24V Thermostat</span>
+        The only purpose-built level-to-level transfer fan in the category. The ASLL body lives inside the floor joist cavity; a grille on the lower-floor ceiling draws air up through the joist space; a standard-look floor register on the upper floor is the discharge. Both grilles are included. Can also reverse direction to push conditioned air downward if needed. The optional <strong>FC24 Fan Center</strong> kit (~$30) wires directly to the mini-split&rsquo;s 24&nbsp;V thermostat signal &mdash; the cleanest and most native control path of all candidates. No WiFi; add a Shelly 1 on the 120&nbsp;V supply for app override or timer. Made in USA.
       </p>
       <div class="card-actions">
-        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20AC%20Infinity%20AI-CLT4&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20AC%20Infinity%0A%20%20Model%3A%20%20%20%20%20%20%20%20AI-CLT4%0A%20%20List%20price%3A%20%20%20%24119.00%0A%20%20Purchase%20ID%3A%20%20339%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0A%20%20Product%20spec%3A%0A%20%20https%3A%2F%2Facinfinity.com%2Fcloudline-t4-quiet-inline-fan-4-with-temperature-humidity-vpd-controller%2F%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
+        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20Tjernlund%20ASLL&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20Tjernlund%0A%20%20Model%3A%20%20%20%20%20%20%20%20ASLL%0A%20%20List%20price%3A%20%20%20~%24177%0A%20%20Purchase%20ID%3A%20%20345%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0A%20%20Product%20spec%3A%0A%20%20https%3A%2F%2Fshop.tjernlund.com%2Fproducts%2Fasll%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
       </div>
     </div>
   </div>
@@ -380,66 +384,40 @@
   <!-- ═══════════════════════════════════════════════════════════
        ALTERNATIVES
   ════════════════════════════════════════════════════════════════ -->
-  <div class="section-label">Alternatives &mdash; 4</div>
+  <div class="section-label">Alternatives &mdash; 5</div>
 
-  <!-- ALT 1: Inkbird IVC-001W -->
+  <!-- ALT 1: AC Infinity AIRTAP T4 — in-floor register booster -->
   <div class="card">
-    <img class="card-image" src="img/880-wendy/inkbird-ivc-001w.png" alt="Inkbird IVC-001W smart inline duct fan" loading="lazy">
+    <img class="card-image" src="img/880-wendy/airtap-t4.jpg" alt="AC Infinity AIRTAP T4 smart register booster fan" loading="lazy">
     <div class="card-body">
       <div><span class="badge alt">Alternative</span></div>
-      <p class="card-title">IVC-001W 6&rdquo; Smart Inline Duct Fan with WiFi Temp &amp; Humidity Controller</p>
-      <div class="card-mfr">Inkbird &middot; Model IVC-001W</div>
-      <a class="product-link" href="https://www.inkbird.com/products/ivc-001w-inline-duct-fan-with-smart-controller" target="_blank" rel="noopener noreferrer">View on manufacturer site &#8599;</a>
+      <p class="card-title">AIRTAP T4 Smart Register Booster Fan &mdash; 4&rdquo;&times;10&rdquo; In-Floor Diffuser</p>
+      <div class="card-mfr">AC Infinity &middot; Model AC-RBF4-W</div>
+      <a class="product-link" href="https://acinfinity.com/airtap-t4-smart-register-booster-fan-4-x-10-white/" target="_blank" rel="noopener noreferrer">View on manufacturer site &#8599;</a>
       <div class="card-attrs">
-        <span><strong>CFM</strong> 350 (run at low speed)</span>
-        <span><strong>Noise</strong> 32 dBA</span>
-        <span><strong>Duct</strong> 6&rdquo;</span>
-        <span><strong>Power</strong> 110&ndash;240 V AC</span>
-        <span><strong>List price</strong> $150.99 (sale, reg. $199.99)</span>
-        <span><strong>Lead time</strong> 5&ndash;7 days</span>
-        <span><strong>Keynote</strong> 23 37 00</span>
-        <span><strong>Library ID</strong> Product #711 &middot; Purchase #340</span>
-      </div>
-      <p class="card-notes">
-        <span class="ctrl-tag ctrl-wifi">WiFi Native</span>
-        Native 2.4 GHz WiFi via the <strong>INKBIRD app</strong>. Supports temperature, humidity, timer, and manual modes &mdash; same trigger logic as the primary. Larger 6&rdquo; duct size requires a 6&rdquo; ceiling collar and matching floor register boot; only worthwhile if the chase cavity is already sized for 6&rdquo; round or if Eric prefers more future headroom. At 350 CFM it is significantly more air than needed for 370 sf &mdash; plan to run at minimum speed. Good choice if 4&rdquo; duct is already in the chase from prior work.
-      </p>
-      <div class="card-actions">
-        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20Inkbird%20IVC-001W&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20Inkbird%0A%20%20Model%3A%20%20%20%20%20%20%20%20IVC-001W%0A%20%20List%20price%3A%20%20%20%24150.99%0A%20%20Purchase%20ID%3A%20%20340%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ALT 2: TerraBloom ECMF-100-R -->
-  <div class="card">
-    <img class="card-image" src="img/880-wendy/terrabloom-ecmf-100r.png" alt="TerraBloom ECMF-100 inline duct fan" loading="lazy">
-    <div class="card-body">
-      <div><span class="badge alt">Alternative</span></div>
-      <p class="card-title">ECMF-100-R Quiet 4&rdquo; Inline Duct Fan with Wireless Remote Speed Controller</p>
-      <div class="card-mfr">TerraBloom &middot; Model ECMF-100-R</div>
-      <a class="product-link" href="https://www.amazon.com/TerraBloom-ECMF-100-R-Wireless-Controller-Efficient/dp/B08L4NH9VD" target="_blank" rel="noopener noreferrer">View on Amazon &#8599;</a>
-      <div class="card-attrs">
-        <span><strong>CFM</strong> 141</span>
-        <span><strong>Noise</strong> 18 dBA (quietest option)</span>
-        <span><strong>Duct</strong> 4&rdquo;</span>
-        <span><strong>Dimensions</strong> 6.3 &times; 7.3 &times; 5.9 in (most compact)</span>
-        <span><strong>Power</strong> 21 W</span>
-        <span><strong>List price</strong> ~$70</span>
+        <span><strong>CFM</strong> 130</span>
+        <span><strong>Noise</strong> 17 dBA</span>
+        <span><strong>Fits register</strong> 4&rdquo;&times;10&rdquo;</span>
+        <span><strong>Grille plate</strong> 11.54&times;5.51 in</span>
+        <span><strong>Power</strong> 6 W &middot; 12V DC</span>
+        <span><strong>Install</strong> In-floor, in-wall, or ceiling register</span>
+        <span><strong>List price</strong> $59.99</span>
         <span><strong>Lead time</strong> 3&ndash;5 days</span>
         <span><strong>Keynote</strong> 23 37 00</span>
-        <span><strong>Library ID</strong> Product #712 &middot; Purchase #341</span>
+        <span><strong>Library ID</strong> Product #715 &middot; Purchase #344</span>
       </div>
       <p class="card-notes">
-        <span class="ctrl-tag ctrl-relay">Relay / Smart Plug</span>
-        No native WiFi. Comes with a wireless RF remote (50 ft range, 6 speed presets). For automated control, wire a <strong>Shelly 1 relay</strong> in-line with the 120 V supply &mdash; the relay handles on/off via app, Home Assistant, or thermostat signal, while the remote pre-sets the fan speed. This is the quietest option at 18 dBA and the most compact physically &mdash; best if the chase is tight or noise is the dominant concern. Airtight metal casing, dual-ball EC motor rated 70,000 hours. ETL listed.
+        <span class="ctrl-tag ctrl-floor">In-Floor Diffuser</span>
+        <span class="ctrl-tag ctrl-wifi">Bluetooth App</span>
+        The AIRTAP T4 <em>is</em> the floor register &mdash; it replaces the standard 4&rdquo;&times;10&rdquo; grille on the upper floor and actively draws air from the lower floor through the joist cavity. No inline ductwork or separate housing needed. At 130 CFM it moves enough air across 370 sf without overpowering the space. 10-speed Bluetooth control via the <strong>AC Infinity app</strong> (iOS/Android) supports temperature triggers: set a threshold (e.g., activate when the lower floor rises above 72&deg;F) to track mini-split runtime without hardwiring. Timer and schedule modes also available. Dual 92&nbsp;mm EC fans rated 67,000 hours. UL/CE/RoHS. 2-year warranty.
       </p>
       <div class="card-actions">
-        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20TerraBloom%20ECMF-100-R&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20TerraBloom%0A%20%20Model%3A%20%20%20%20%20%20%20%20ECMF-100-R%0A%20%20List%20price%3A%20%20%20%2470%0A%20%20Purchase%20ID%3A%20%20341%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
+        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20AC%20Infinity%20AIRTAP%20T4&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20AC%20Infinity%0A%20%20Model%3A%20%20%20%20%20%20%20%20AC-RBF4-W%0A%20%20List%20price%3A%20%20%20%2459.99%0A%20%20Purchase%20ID%3A%20%20344%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0A%20%20Product%20spec%3A%0A%20%20https%3A%2F%2Facinfinity.com%2Fairtap-t4-smart-register-booster-fan-4-x-10-white%2F%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
       </div>
     </div>
   </div>
 
-  <!-- ALT 3: Tjernlund AS1 -->
+  <!-- ALT 2: Tjernlund AS1 — room-to-room wall-mount (kept) -->
   <div class="card">
     <img class="card-image" src="img/880-wendy/tjernlund-as1.png" alt="Tjernlund AS1 AireShare room-to-room transfer fan" loading="lazy">
     <div class="card-body">
@@ -450,24 +428,55 @@
       <div class="card-attrs">
         <span><strong>CFM</strong> 70</span>
         <span><strong>Noise</strong> 1.5 sones</span>
-        <span><strong>Install</strong> Hardwired 120 V, between studs</span>
-        <span><strong>Dimensions</strong> 3 &times; 4 &times; 16 in body (fits 16&rdquo; o.c. stud bay)</span>
-        <span><strong>Power</strong> 20 W</span>
-        <span><strong>List price</strong> $170 (backordered ~14 days)</span>
+        <span><strong>Install</strong> Between studs &mdash; wall-mount, grille each side</span>
+        <span><strong>Body</strong> 3&times;4&times;16 in (fits 16&rdquo; o.c. stud bay)</span>
+        <span><strong>Power</strong> 20 W hardwired 120V</span>
+        <span><strong>List price</strong> ~$170</span>
+        <span><strong>Lead time</strong> 10&ndash;14 days</span>
         <span><strong>Keynote</strong> 23 37 00</span>
         <span><strong>Library ID</strong> Product #713 &middot; Purchase #342</span>
       </div>
       <p class="card-notes">
+        <span class="ctrl-tag ctrl-wall">Wall-Mount</span>
         <span class="ctrl-tag ctrl-smart">24V Thermostat</span>
-        The purpose-built inter-floor solution. Tjernlund&rsquo;s <strong>24V Fan Center kit</strong> (sold separately, ~$30) wires directly to the mini-split&rsquo;s 24 V thermostat output &mdash; the cleanest and most native tie-in of all candidates: fan runs exactly when the mini-split runs, no temperature guessing. Installs between wall studs; intake grille in the lower floor ceiling or wall, discharge grille in the upper floor. No WiFi natively; add a Shelly 1 on the 120 V line for app override and timer. Made in USA. Currently backordered at Sylvane; also available via Amazon.
+        Eric&rsquo;s existing reference unit. Purpose-built room-to-room fan that installs between wall studs with an intake grille on one side and a discharge grille on the other. Can be positioned high on the lower-floor wall (near ceiling) to maximize the ceiling&rarr;floor temperature differential. The <strong>FC24 24V Fan Center</strong> (~$30, sold separately) wires to the mini-split thermostat for native run-with-system control. No WiFi; add Shelly 1 on 120&nbsp;V for app override. Made in USA.
       </p>
       <div class="card-actions">
-        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20Tjernlund%20AS1&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20Tjernlund%0A%20%20Model%3A%20%20%20%20%20%20%20%20AS1%0A%20%20List%20price%3A%20%20%20%24170%0A%20%20Purchase%20ID%3A%20%20342%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
+        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20Tjernlund%20AS1&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20Tjernlund%0A%20%20Model%3A%20%20%20%20%20%20%20%20AS1%0A%20%20List%20price%3A%20%20%20~%24170%0A%20%20Purchase%20ID%3A%20%20342%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
       </div>
     </div>
   </div>
 
-  <!-- ALT 4: Suncourt EZ8 HC600 -->
+  <!-- ALT 3: Suncourt TW408 — through-wall transfer fan -->
+  <div class="card">
+    <img class="card-image" src="img/880-wendy/suncourt-tw408.jpg" alt="Suncourt TW408 ThruWall room-to-room transfer fan" loading="lazy">
+    <div class="card-body">
+      <div><span class="badge alt">Alternative</span></div>
+      <p class="card-title">ThruWall TW408 2-Speed Room-to-Room Transfer Fan with Airflow Adaptor Plates</p>
+      <div class="card-mfr">Suncourt &middot; Model TW408</div>
+      <a class="product-link" href="https://suncourt.com/products/thruwall-2-speed-w-airflow-adapter-room-to-room-fan-tw408" target="_blank" rel="noopener noreferrer">View on manufacturer site &#8599;</a>
+      <div class="card-attrs">
+        <span><strong>CFM</strong> 130 high / 90 low</span>
+        <span><strong>Noise</strong> 54 dBA (high)</span>
+        <span><strong>Install</strong> Through-wall &mdash; any frame wall 3.75&ndash;6.5 in thick</span>
+        <span><strong>Power</strong> Corded plug-in &middot; 10-ft cord</span>
+        <span><strong>List price</strong> $69.99</span>
+        <span><strong>Lead time</strong> Same-day (Lowe&rsquo;s in-store)</span>
+        <span><strong>Keynote</strong> 23 37 00</span>
+        <span><strong>Library ID</strong> Product #717 &middot; Purchase #346</span>
+      </div>
+      <p class="card-notes">
+        <span class="ctrl-tag ctrl-wall">Wall-Mount</span>
+        <span class="ctrl-tag ctrl-relay">Smart Plug</span>
+        Purpose-built room-to-room transfer fan with the highest CFM output in the alternatives. Wall-mount only &mdash; requires a penetration through the party wall or a stud-bay chase. Can be positioned near the ceiling of the lower floor to pull warm stratified air upward. Airflow adaptor plates give a clean square-grille finish on both faces. 2-speed plug-in cord; pair with a Kasa or Shelly smart plug for timer or remote control. Note: louder at high speed (54 dBA) than the AIRTAP or AS1 &mdash; consider low-speed use only. MET Listed UL/CSA. 12-month warranty. Available same-day at Lowe&rsquo;s.
+      </p>
+      <div class="card-actions">
+        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20Suncourt%20TW408&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20Suncourt%0A%20%20Model%3A%20%20%20%20%20%20%20%20TW408%0A%20%20List%20price%3A%20%20%20%2469.99%0A%20%20Purchase%20ID%3A%20%20346%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0A%20%20Product%20spec%3A%0A%20%20https%3A%2F%2Fsuncourt.com%2Fproducts%2Fthruwall-2-speed-w-airflow-adapter-room-to-room-fan-tw408%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALT 4: Suncourt HC600 — register booster (kept) -->
   <div class="card">
     <img class="card-image" src="img/880-wendy/suncourt-hc600.jpg" alt="Suncourt HC600 EZ8 smart register booster fan" loading="lazy">
     <div class="card-body">
@@ -478,20 +487,49 @@
       <div class="card-attrs">
         <span><strong>CFM</strong> 60&ndash;200 (8 speeds)</span>
         <span><strong>Noise</strong> Ultra-quiet (engineered)</span>
-        <span><strong>Install</strong> Sits ON floor register &mdash; no ductwork, plug-in 120 V</span>
+        <span><strong>Install</strong> Sits ON floor register &mdash; no ductwork, plug-in 120V</span>
         <span><strong>Fits</strong> Any floor/wall register 6&rdquo;&times;12&rdquo; or smaller</span>
-        <span><strong>List price</strong> ~$48 (Home Depot / Lowes)</span>
+        <span><strong>List price</strong> ~$48</span>
         <span><strong>Lead time</strong> Same day (in-store)</span>
         <span><strong>Keynote</strong> 23 37 00</span>
         <span><strong>Library ID</strong> Product #714 &middot; Purchase #343</span>
       </div>
       <p class="card-notes">
+        <span class="ctrl-tag ctrl-floor">Floor Register</span>
         <span class="ctrl-tag ctrl-smart">Self-Learning</span>
-        <span class="ctrl-tag ctrl-relay">Smart Plug</span>
-        Lowest cost and simplest install of the group &mdash; no chase penetration, no collar, no register boot. The EZ8 sits on top of the upper-floor register and its self-learning circuitry detects the mini-split&rsquo;s airflow change to turn on automatically. No WiFi; pair with a Kasa EP25 or Shelly Plug S smart plug for timer or override control. Appropriate if the budget is tight or if Eric wants to test the concept before committing to ductwork. Downside: airflow direction is outward from the register, not inter-floor; this boosts supply air at the register rather than actively pulling from the lower floor. Best suited if the upper floor register already receives some conditioned air. USA made. 3-year warranty.
+        Lowest cost and simplest install &mdash; no chase penetration, no collar, no register boot. The EZ8 sits on top of the upper-floor register; its self-learning circuitry detects the mini-split&rsquo;s airflow change and turns on automatically. No WiFi; pair with a Kasa EP25 or Shelly Plug S smart plug for timer or override. Best if the budget is tight or Eric wants to test the concept before committing to ductwork. Note: this boosts <em>supply</em> air outward from the existing register rather than actively drawing from the lower floor &mdash; suitable only where the upper register already carries some conditioned air. USA made. 3-year warranty.
       </p>
       <div class="card-actions">
-        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20Suncourt%20HC600&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20Suncourt%0A%20%20Model%3A%20%20%20%20%20%20%20%20HC600%0A%20%20List%20price%3A%20%20%20%2448%0A%20%20Purchase%20ID%3A%20%20343%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
+        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20Suncourt%20HC600&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20Suncourt%0A%20%20Model%3A%20%20%20%20%20%20%20%20HC600%0A%20%20List%20price%3A%20%20%20~%2448%0A%20%20Purchase%20ID%3A%20%20343%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALT 5: AC Infinity CLOUDLINE T4 — kept for smart controls -->
+  <div class="card">
+    <img class="card-image" src="img/880-wendy/ac-infinity-t4.jpg" alt="AC Infinity CLOUDLINE T4 inline duct fan" loading="lazy">
+    <div class="card-body">
+      <div><span class="badge alt">Alternative</span></div>
+      <p class="card-title">CLOUDLINE T4 Quiet 4&rdquo; Inline Duct Fan with Temp, Humidity &amp; WiFi Controller</p>
+      <div class="card-mfr">AC Infinity &middot; Model AI-CLT4</div>
+      <a class="product-link" href="https://acinfinity.com/cloudline-t4-quiet-inline-fan-4-with-temperature-humidity-vpd-controller/" target="_blank" rel="noopener noreferrer">View on manufacturer site &#8599;</a>
+      <div class="card-attrs">
+        <span><strong>CFM</strong> 205</span>
+        <span><strong>Noise</strong> 28 dBA</span>
+        <span><strong>Duct</strong> 4&rdquo; inline</span>
+        <span><strong>Dimensions</strong> 7.4&times;11.9&times;6.9 in body</span>
+        <span><strong>Power</strong> 28 W max / 21 W avg</span>
+        <span><strong>List price</strong> $119.00</span>
+        <span><strong>Lead time</strong> 3&ndash;5 days</span>
+        <span><strong>Keynote</strong> 23 37 00</span>
+        <span><strong>Library ID</strong> Product #710 &middot; Purchase #339</span>
+      </div>
+      <p class="card-notes">
+        <span class="ctrl-tag ctrl-wifi">WiFi Native</span>
+        Retained for its best-in-class smart controls. Inline duct fan that mounts in a 4&rdquo; duct run between the lower-floor ceiling collar and the upper-floor floor register boot &mdash; requires a dedicated chase. At 205 CFM it is the highest-output unit here, though that exceeds what is strictly needed for 370 sf. Native WiFi via the <strong>AC Infinity app</strong> with temperature, humidity, VPD, and schedule triggers is the most capable automation platform in the set; a Shelly 1 relay can also wire to the mini-split 24&nbsp;V thermostat signal for hardwired control. ETL listed. 2-year warranty.
+      </p>
+      <div class="card-actions">
+        <a class="btn" href="mailto:selections@craftedearth.com?subject=Selection%20approval%3A%20HV02%20AC%20Infinity%20CLOUDLINE%20T4&body=Hello%20Selections%20Team%2C%0A%0AI%20approve%20this%20option%3A%0A%0A%20%20Type%20Mark%3A%20%20%20%20HV02%0A%20%20Item%3A%20%20%20%20%20%20%20%20%20Floor%20to%20Floor%20Air%20Mixer%0A%20%20Manufacturer%3A%20AC%20Infinity%0A%20%20Model%3A%20%20%20%20%20%20%20%20AI-CLT4%0A%20%20List%20price%3A%20%20%20%24119.00%0A%20%20Purchase%20ID%3A%20%20339%0A%20%20Project%3A%20%20%20%20%20%20880%20Wendy%20Lane%0A%0A%20%20Product%20spec%3A%0A%20%20https%3A%2F%2Facinfinity.com%2Fcloudline-t4-quiet-inline-fan-4-with-temperature-humidity-vpd-controller%2F%0A%0AThanks" target="_blank" rel="noopener">Approve this Design Selection</a>
       </div>
     </div>
   </div>
