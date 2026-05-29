@@ -2,7 +2,7 @@
   "title": "33 Estelle Ave — Selections",
   "slug": "33-estelle",
   "pn": "33 Estelle Ave",
-  "gen": "2026-05-28",
+  "gen": "2026-05-29",
   "items": [
     {
       "id": 104,
@@ -588,25 +588,6 @@
       "url": "selection.html?p=33-estelle&id=201"
     },
     {
-      "id": 208,
-      "pt": "Primary",
-      "st": "Placeholder",
-      "tm": "FWW10",
-      "ti": "LIME PLASTER PAINT",
-      "ar": "Guest Bathroom",
-      "qt": 1,
-      "un": "EA",
-      "ld": 10,
-      "make": "Wolf-Gordon",
-      "mod": "PALV 914",
-      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/395.png",
-      "fi": "Olive",
-      "co": "Pallavi",
-      "pu": "https://www.wolfgordon.com/products/wallcovering/pallavi-palv-914",
-      "no": "Pallavi PALV 914 in Olive is a commercial wallcovering product by Wolf-Gordon. It is part of the Pallavi collection designed for interior wall applications.",
-      "url": "selection.html?p=33-estelle&id=208"
-    },
-    {
       "id": 279,
       "pt": "Primary",
       "st": "Placeholder",
@@ -1003,6 +984,24 @@
       "url": "selection.html?p=33-estelle&id=206"
     },
     {
+      "id": 208,
+      "pt": "Primary",
+      "st": "Proposed",
+      "tm": "FWW10",
+      "ti": "LIME PLASTER PAINT",
+      "ar": "Guest Bathroom",
+      "qt": 1,
+      "un": "EA",
+      "make": "Color Atelier Paint",
+      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/718-20260529222543.jpg",
+      "fi": "Cobblestone",
+      "co": "Lime Paint",
+      "msrp": 90.9,
+      "pu": "https://www.coloratelierpaint.com/products/lime-paint-cobblestone?variant=43636887453943",
+      "no": "Natural mineral-based limewash paint with matte finish and soft tonal variations. Available in Quart, 1-Gallon, and 5-Gallon sizes with color strength options of 50% lighter, 100% standard, or 150% darker. Breathable, durable, zero VOC formula suitab",
+      "url": "selection.html?p=33-estelle&id=208"
+    },
+    {
       "id": 266,
       "pt": "Primary",
       "st": "Proposed",
@@ -1053,7 +1052,7 @@
       "fi": "Alabaster LXC Large Mixed",
       "co": "Venice",
       "pu": "https://www.concrete-collaborative.com/order-venice-large-sample?utm_source=Pinterest&utm_medium=organic",
-      "no": "Venice Large Sample product from Concrete Collaborative. This is a sample ordering page for the Venice collection.",
+      "no": "Venice Large Sample product from Concrete Collaborative. This is a sample ordering page for the Venice collection.\nFloor: A custom made terrazzo of yellow, purple and black for the floor & cutout. Similar to the below alabaster l x c, but ideally a m",
       "url": "selection.html?p=33-estelle&id=293"
     },
     {
@@ -1797,6 +1796,17 @@
       "no": "3x3 Straight Set Sheeted Natural Press Ceramic Mosaic Tile in Yellow Ochre Gloss. Warm earthy yellow with opaque gloss sheen, well suited for midcentury design applications.",
       "url": "selection.html?p=33-estelle&id=338",
       "pp": 203
+    },
+    {
+      "id": 347,
+      "pt": "Alternative",
+      "st": "Placeholder",
+      "tm": "FTV21",
+      "ti": "APRON & NICHE TILE",
+      "qt": 1,
+      "un": "EA",
+      "url": "selection.html?p=33-estelle&id=347",
+      "pp": 296
     },
     {
       "id": 152,
