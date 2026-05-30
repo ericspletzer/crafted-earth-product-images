@@ -1135,22 +1135,21 @@
       "url": "selection.html?p=33-estelle&id=332"
     },
     {
-      "id": 333,
+      "id": 352,
       "pt": "Primary",
       "st": "Proposed",
       "tm": "SA02",
       "ti": "REFRIDGERATOR - 36\" Counter Depth, Panel Ready",
-      "ar": "Kitchen",
       "qt": 1,
       "un": "EA",
-      "make": "KitchenAid",
-      "mod": "KRFC136TPA",
-      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/730-20260529235644.png",
+      "make": "Thermador",
+      "mod": "T36IT100NP",
+      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/729-20260529235349.png",
       "fi": "Panel Ready",
-      "msrp": 3238,
-      "pu": "https://www.fergusonhome.com/kitchenaid-krfc136tpa/s2087785?uid=5099164",
-      "no": "36 Inch Wide 22 Cu. Ft. Panel Ready French Door Refrigerator with Max Cool and Preserva Cooling System",
-      "url": "selection.html?p=33-estelle&id=333"
+      "co": "Freedom",
+      "pu": "https://www.fergusonhome.com/thermador-t36it100np/s1982062?uid=4708774",
+      "no": "36 inch wide French door refrigerator with 18.8 cubic feet capacity. Energy Star certified with soft close doors and drawers.",
+      "url": "selection.html?p=33-estelle&id=352"
     },
     {
       "id": 112,
@@ -1721,7 +1720,7 @@
       "pu": "https://www.ajmadison.com/cgi-bin/ajmadison/HC2092G.html",
       "no": "36 inch built-in French door refrigerator with 19.5 cu. ft. capacity, featuring DuoCooling, NoFrost, and ENERGY STAR certification. Includes ice maker and Sabbath Mode with Star-K certification.",
       "url": "selection.html?p=33-estelle&id=350",
-      "pp": 333
+      "pp": 352
     },
     {
       "id": 351,
@@ -1739,25 +1738,7 @@
       "pu": "https://www.fergusonhome.com/bosch-b36it100np/s2076792?uid=5054362",
       "no": "36 Inch Wide 20.1 Cu. Ft. Energy Star Certified French Door Refrigerator from the Benchmark Series by Bosch.",
       "url": "selection.html?p=33-estelle&id=351",
-      "pp": 333
-    },
-    {
-      "id": 352,
-      "pt": "Alternative",
-      "st": "Placeholder",
-      "tm": "SA02",
-      "ti": "REFRIDGERATOR - 36\" Counter Depth, Panel Ready",
-      "qt": 1,
-      "un": "EA",
-      "make": "Thermador",
-      "mod": "T36IT100NP",
-      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/729-20260529235349.png",
-      "fi": "Panel Ready",
-      "co": "Freedom",
-      "pu": "https://www.fergusonhome.com/thermador-t36it100np/s1982062?uid=4708774",
-      "no": "36 inch wide French door refrigerator with 18.8 cubic feet capacity. Energy Star certified with soft close doors and drawers.",
-      "url": "selection.html?p=33-estelle&id=352",
-      "pp": 333
+      "pp": 352
     },
     {
       "id": 353,
@@ -1774,7 +1755,7 @@
       "pu": "https://www.ajmadison.com/cgi-bin/ajmadison/RVY497790.html",
       "no": "36 Inch Panel Ready Built-In French Door Smart Refrigerator with 20.1 cu. ft. Total Capacity, Internal Water/Ice Dispenser, Full Touch TFT Display, Sabbath Mode, Star-K Certified and ENERGY STAR Certified",
       "url": "selection.html?p=33-estelle&id=353",
-      "pp": 333
+      "pp": 352
     },
     {
       "id": 355,
@@ -2200,6 +2181,25 @@
       "no": "Semi-professional kitchen sink faucet with three-function sprayhead. Features a tall design with professional-grade performance and easy installation for both commercial and residential kitchen applications. Matte Black finish (BL).",
       "url": "selection.html?p=33-estelle&id=325",
       "pp": 145
+    },
+    {
+      "id": 333,
+      "pt": "Alternative",
+      "st": "Proposed",
+      "tm": "SA02",
+      "ti": "REFRIDGERATOR - 36\" Counter Depth, Panel Ready",
+      "ar": "Kitchen",
+      "qt": 1,
+      "un": "EA",
+      "make": "KitchenAid",
+      "mod": "KRFC136TPA",
+      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/730-20260529235644.png",
+      "fi": "Panel Ready",
+      "msrp": 3238,
+      "pu": "https://www.fergusonhome.com/kitchenaid-krfc136tpa/s2087785?uid=5099164",
+      "no": "36 Inch Wide 22 Cu. Ft. Panel Ready French Door Refrigerator with Max Cool and Preserva Cooling System",
+      "url": "selection.html?p=33-estelle&id=333",
+      "pp": 352
     },
     {
       "id": 334,
