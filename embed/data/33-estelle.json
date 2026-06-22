@@ -2,7 +2,7 @@
   "title": "33 Estelle Ave — Selections",
   "slug": "33-estelle",
   "pn": "33 Estelle Ave",
-  "gen": "2026-06-17",
+  "gen": "2026-06-22",
   "items": [
     {
       "id": 104,
@@ -184,20 +184,6 @@
       "pu": "https://www.domaincabinets.com/valleywood-shaker-white-wall-2-door-36-inch-p/wc2d36-sfpw-vw.htm",
       "no": "Valleywood Shaker White Wall Cabinet with 2 Doors and 36 inch height. Domain Cabinets offers premium stock and custom Ready-To-Assemble (RTA) framed and frame-less cabinets.",
       "url": "selection.html?p=33-estelle&id=115"
-    },
-    {
-      "id": 116,
-      "pt": "Primary",
-      "st": "Placeholder",
-      "tm": "CV03",
-      "ti": "DOUBLE VANITY",
-      "ar": "Guest Bathroom",
-      "qt": 1,
-      "un": "EA",
-      "ld": 10,
-      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/510-20260327061048.png",
-      "no": "Double Vanity, 55\"",
-      "url": "selection.html?p=33-estelle&id=116"
     },
     {
       "id": 117,
@@ -666,24 +652,6 @@
       "url": "selection.html?p=33-estelle&id=205"
     },
     {
-      "id": 206,
-      "pt": "Primary",
-      "st": "Proposed",
-      "tm": "FTV25",
-      "ti": "GUEST BATH FLOOR TILES",
-      "ar": "Guest Bathroom",
-      "qt": 38,
-      "un": "EA",
-      "make": "Fireclay Tile",
-      "mod": "Hex 1\"",
-      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/512-20260327062604.png",
-      "fi": "Bonsai Matte, Calcite Matte, Mustard Seed Matte",
-      "co": "Double Daisy",
-      "pu": "https://www.fireclaytile.com/pages/mosaic-tile-visualizer-tool/?s=1hex&o=classicPatterns&m=original&hr=3&vr=2&rs=perUnit&seed=0&cr=0&cp=Bonsai+Matte%2CCalcite+Matte%2CMustard+Seed+Matte&cpk=doubleDaisy&ur=e30%3D&src=share",
-      "no": "Fireclay Tile Double Daisy pattern 1\" Hexagon, Bonsai, Calcite & Mustard Seed",
-      "url": "selection.html?p=33-estelle&id=206"
-    },
-    {
       "id": 230,
       "pt": "Primary",
       "st": "Proposed",
@@ -735,26 +703,6 @@
       "pu": "https://www.concrete-collaborative.com/order-venice-large-sample?utm_source=Pinterest&utm_medium=organic",
       "no": "Venice Large Sample product from Concrete Collaborative. This is a sample ordering page for the Venice collection.\nFloor: A custom made terrazzo of yellow, purple and black for the floor & cutout. Similar to the below alabaster l x c, but ideally a m",
       "url": "selection.html?p=33-estelle&id=293"
-    },
-    {
-      "id": 296,
-      "pt": "Primary",
-      "st": "Proposed",
-      "tm": "FTV21",
-      "ti": "Apron Tiles",
-      "ar": "Guest Bathroom",
-      "qt": 10,
-      "un": "EA",
-      "ld": 60,
-      "make": "Fireclay Tile",
-      "mod": "TT.OC.M06.A42.M408.MA",
-      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/631-20260429001256.jpg",
-      "fi": "Bonsai Matte",
-      "co": "Original Ceramic",
-      "msrp": 53,
-      "pu": "https://www.fireclaytile.com/products/original-ceramic-matte-bonsai-tile-2x2-straight-set-sheeted",
-      "no": "Versatile warm olive green mosaic tile exuding quiet sophistication with smooth, non-reflective matte finish. 2x2 straight set sheeted configuration for easy installation.",
-      "url": "selection.html?p=33-estelle&id=296"
     },
     {
       "id": 322,
@@ -887,6 +835,20 @@
       "url": "selection.html?p=33-estelle&id=113"
     },
     {
+      "id": 116,
+      "pt": "Primary",
+      "st": "Selected",
+      "tm": "CV03",
+      "ti": "DOUBLE VANITY",
+      "ar": "Guest Bathroom",
+      "qt": 1,
+      "un": "EA",
+      "ld": 10,
+      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/510-20260327061048.png",
+      "no": "Double Vanity, 55\"",
+      "url": "selection.html?p=33-estelle&id=116"
+    },
+    {
       "id": 130,
       "pt": "Primary",
       "st": "Selected",
@@ -1006,15 +968,14 @@
       "ar": "Kitchen",
       "qt": 1,
       "un": "EA",
-      "ld": 10,
       "make": "Kohler",
-      "mod": "K-6489",
-      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/513-20260327065948.png",
-      "fi": "White",
+      "mod": "K-6489-96",
+      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/875-20260622200828.jpg",
+      "fi": "Biscuit",
       "co": "Whitehaven",
-      "msrp": 1266.86,
-      "pu": "https://www.kohler.com/en/products/kitchen-sinks/shop-kitchen-sinks/whitehaven-35-3-4-undermount-single-bowl-farmhouse-kitchen-sink-6489",
-      "no": "Whitehaven 35-3/4 inch undermount single-bowl farmhouse kitchen sink. Features an enameled cast iron single-basin with tall apron front. Available in multiple color options including White, Black Black, Sea Salt, Truffle, Biscuit, Dune, Teal, Fresh G",
+      "msrp": 1646.89,
+      "pu": "https://www.kohler.com/en/products/kitchen-sinks/shop-kitchen-sinks/whitehaven-35-3-4-undermount-single-bowl-farmhouse-kitchen-sink-6489?skuId=6489-96",
+      "no": "Enameled cast iron undermount single-bowl farmhouse kitchen sink with tall apron front. 35-3/4 inches wide with contemporary farmhouse design. Available in multiple finishes.",
       "url": "selection.html?p=33-estelle&id=144"
     },
     {
@@ -1218,6 +1179,23 @@
       "pu": "https://www.concrete-collaborative.com/strands",
       "no": "Combine the Apricot and Glaze in a diagonal pattern",
       "url": "selection.html?p=33-estelle&id=204"
+    },
+    {
+      "id": 206,
+      "pt": "Primary",
+      "st": "Selected",
+      "tm": "FTV25",
+      "ti": "GUEST BATH FLOOR TILES",
+      "ar": "Guest Bathroom",
+      "qt": 38,
+      "un": "EA",
+      "make": "Fireclay Tile",
+      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/876-20260622204303.png",
+      "fi": "Lone Pine Matte Base, Calcite Matte Petal, Koi Matte Center",
+      "co": "Double Daisies",
+      "pu": "https://www.fireclaytile.com/pages/mosaic-tile-visualizer-tool/?s=1hex&o=classicPatterns&m=original&hr=3&vr=2&rs=perUnit&seed=0&cr=0&cp=Lone+Pine+Matte%2CCalcite+Matte%2CKoi+Matte&cpk=doubleDaisy&ur=e30%3D",
+      "no": "Mosaic Tile Visualizer Tool by Fireclay Tile allows users to design and preview custom mosaic tile patterns with various color combinations and layout options.",
+      "url": "selection.html?p=33-estelle&id=206"
     },
     {
       "id": 207,
@@ -1515,6 +1493,26 @@
       "url": "selection.html?p=33-estelle&id=163"
     },
     {
+      "id": 296,
+      "pt": "Primary",
+      "st": "Disqualified",
+      "tm": "FTV21",
+      "ti": "Apron Tiles",
+      "ar": "Guest Bathroom",
+      "qt": 10,
+      "un": "EA",
+      "ld": 60,
+      "make": "Fireclay Tile",
+      "mod": "TT.OC.M06.A42.M408.MA",
+      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/631-20260429001256.jpg",
+      "fi": "Bonsai Matte",
+      "co": "Original Ceramic",
+      "msrp": 53,
+      "pu": "https://www.fireclaytile.com/products/original-ceramic-matte-bonsai-tile-2x2-straight-set-sheeted",
+      "no": "Versatile warm olive green mosaic tile exuding quiet sophistication with smooth, non-reflective matte finish. 2x2 straight set sheeted configuration for easy installation.",
+      "url": "selection.html?p=33-estelle&id=296"
+    },
+    {
       "id": 160,
       "pt": "Primary",
       "st": "Installed",
@@ -1620,26 +1618,6 @@
       "no": "3x3 Straight Set Sheeted Natural Press Ceramic Mosaic Tile in Yellow Ochre Gloss. Warm earthy yellow with opaque gloss sheen, well suited for midcentury design applications.",
       "url": "selection.html?p=33-estelle&id=338",
       "pp": 203
-    },
-    {
-      "id": 347,
-      "pt": "Alternative",
-      "st": "Placeholder",
-      "tm": "FTV21",
-      "ti": "APRON & NICHE TILE",
-      "ar": "Guest Bathroom",
-      "qt": 1,
-      "un": "EA",
-      "make": "Fireclay Tile",
-      "mod": "TT.OC.M06.A42.M435.MA",
-      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/719-20260529223329.png",
-      "fi": "Lone Pine Matte",
-      "co": "Original Ceramic",
-      "msrp": 53,
-      "pu": "https://www.fireclaytile.com/products/original-ceramic-matte-lone-pine-tile-2x2-straight-set-sheeted?variant=55732453802287",
-      "no": "2x2 straight set sheeted original ceramic mosaic tile in Lone Pine Matte, an earthy verdant green color with slip-resistant surface. Made to order tile product.",
-      "url": "selection.html?p=33-estelle&id=347",
-      "pp": 296
     },
     {
       "id": 350,
@@ -2318,6 +2296,26 @@
       "no": "K-25322 bathroom sink clicker drain with overflow. Features a click mechanism for easy open and close operation. Available in multiple finish options.",
       "url": "selection.html?p=33-estelle&id=272",
       "pp": 150
+    },
+    {
+      "id": 347,
+      "pt": "Alternative",
+      "st": "Selected",
+      "tm": "FTV21",
+      "ti": "APRON & NICHE TILE",
+      "ar": "Guest Bathroom",
+      "qt": 1,
+      "un": "EA",
+      "make": "Fireclay Tile",
+      "mod": "TT.OC.M06.A42.M435.MA",
+      "img": "https://raw.githubusercontent.com/ericspletzer/crafted-earth-product-images/main/719-20260529223329.png",
+      "fi": "Lone Pine Matte",
+      "co": "Original Ceramic",
+      "msrp": 53,
+      "pu": "https://www.fireclaytile.com/products/original-ceramic-matte-lone-pine-tile-2x2-straight-set-sheeted?variant=55732453802287",
+      "no": "2x2 straight set sheeted original ceramic mosaic tile in Lone Pine Matte, an earthy verdant green color with slip-resistant surface. Made to order tile product.",
+      "url": "selection.html?p=33-estelle&id=347",
+      "pp": 296
     },
     {
       "id": 142,
