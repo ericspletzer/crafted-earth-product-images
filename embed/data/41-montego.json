@@ -23,7 +23,7 @@
     {
       "id": 497,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "PRH",
       "ti": "Shower Rain Head",
       "qt": 1,
@@ -42,7 +42,7 @@
     {
       "id": 503,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "PHH",
       "ti": "Shower Handheld",
       "qt": 1,
@@ -61,7 +61,7 @@
     {
       "id": 509,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "PTF",
       "ti": "Roman Tub Faucet with Handshower (deck)",
       "qt": 1,
@@ -80,7 +80,7 @@
     {
       "id": 515,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "PDF",
       "ti": "Lavatory Faucet (deck)",
       "qt": 1,
@@ -99,7 +99,7 @@
     {
       "id": 521,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "PSV",
       "ti": "Thermostatic Shower Valve",
       "qt": 1,
@@ -118,7 +118,7 @@
     {
       "id": 527,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "PSD",
       "ti": "Shower Diverter",
       "qt": 1,
@@ -136,7 +136,7 @@
     {
       "id": 533,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "TW1",
       "ti": "Wall Tile 1 - Versailles Pattern",
       "qt": 0,
@@ -155,7 +155,7 @@
     {
       "id": 537,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "TF2",
       "ti": "Floor Tile Accent - Herringbone (1x2, not 1x3)",
       "qt": 13,
@@ -174,7 +174,7 @@
     {
       "id": 540,
       "pt": "Primary",
-      "st": "Selected",
+      "st": "Proposed",
       "tm": "TF3",
       "ti": "Floor Tile Border - 4x4",
       "qt": 18,
