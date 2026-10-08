@@ -25,16 +25,6 @@
       "url": "selection.html?p=41-montego&id=555"
     },
     {
-      "id": 557,
-      "pt": "Primary",
-      "st": "Placeholder",
-      "tm": "PLD",
-      "ti": "Bottle Trap, Drain and Stops (bronze)",
-      "qt": 1,
-      "un": "EA",
-      "url": "selection.html?p=41-montego&id=557"
-    },
-    {
       "id": 558,
       "pt": "Primary",
       "st": "Placeholder",
@@ -340,7 +330,7 @@
       "co": "Steampunk Bay (85)",
       "msrp": 469.5,
       "pu": "https://www.calfaucets.com/bathroom/shower/shower-heads-arms-hand-showers/rain-shower-heads/8-contemporary-self-cleaning-showerhead",
-      "no": "California Faucets 8 in brass contemporary rain head (1.8 gpm, ceiling mount) with a 6 in ceiling arm, about $469.50 for the head (STREET, other finish; arm price not found) - a matching California Faucets piece, not a Steampunk Bay-specific head. VE",
+      "no": "California Faucets 8 in brass contemporary rain head (1.8 gpm, ceiling mount) with a 6 in ceiling arm, about $469.50 for the head (STREET, other finish; arm price not found) - a matching California Faucets piece, not a Steampunk Bay-specific head. Bu",
       "url": "selection.html?p=41-montego&id=497"
     },
     {
@@ -358,7 +348,7 @@
       "fi": "Oil Rubbed Bronze (living finish)",
       "co": "Steampunk Bay (85)",
       "pu": "https://images.calfaucets.com/covers/_productThumb/9127-85.jpg",
-      "no": "California Faucets Steampunk Bay slide-bar handshower kit in Oil Rubbed Bronze, price not captured (the Descanso equivalent was about $1,050 street in another finish). Alternatives: swivel wall handshower kit 9126S-85 or elbow with holder SH-25-85 ($",
+      "no": "California Faucets Steampunk Bay slide-bar handshower kit in Oil Rubbed Bronze, price not captured (the Descanso equivalent was about $1,050 street in another finish). Buying through CTW at 20% off; dealer quote from Kevin expected 2026-10-08 - repla",
       "url": "selection.html?p=41-montego&id=503"
     },
     {
@@ -377,7 +367,7 @@
       "co": "Steampunk Bay (85)",
       "msrp": 2637.75,
       "pu": "https://www.fergusonhome.com/california-faucets-8608-etw-18/s1770064",
-      "no": "California Faucets Steampunk Bay high-spout wall tub filler in Oil Rubbed Bronze with a built-in diverter and a wall handshower, hose and bracket included, $2,637.75 (STREET, Ferguson; same at Quality Bath; no list price found). VERIFIED on the CF sp",
+      "no": "California Faucets Steampunk Bay high-spout wall tub filler in Oil Rubbed Bronze with a built-in diverter and a wall handshower, hose and bracket included, $2,637.75 (STREET, Ferguson; same at Quality Bath; no list price found). Buying through CTW at",
       "url": "selection.html?p=41-montego&id=509"
     },
     {
@@ -385,17 +375,17 @@
       "pt": "Primary",
       "st": "Proposed",
       "tm": "PDF",
-      "ti": "Lavatory Faucet",
+      "ti": "Lavatory Faucet - Wall Mount, Steampunk Bay",
       "qt": 1,
       "un": "EA",
       "ld": 10,
       "make": "California Faucets",
-      "mod": "8509-1-ORB (widespread alt 8502-ORB)",
-      "img": "https://images.calfaucets.com/covers/_productThumb/8509-1-1.jpg",
+      "mod": "TO-V8502-9-ORB + VL-R rough",
+      "img": "https://images.calfaucets.com/catalog/_productSmall/TO-V8502-9-1.jpg",
       "fi": "Oil Rubbed Bronze (living finish)",
       "co": "Steampunk Bay (85)",
-      "pu": "https://images.calfaucets.com/technical/8509-1_sp.pdf",
-      "no": "California Faucets Steampunk Bay single-hole lever lavatory faucet in Oil Rubbed Bronze, 1.2 gpm with a touch pop-up drain, price not captured (the BBU widespread 8502ZB-BBU is $2,163 at PDI). VERIFIED on the spec sheet: 9-15/16 in tall, spout 5-1/2 ",
+      "pu": "https://www.calfaucets.com/bathroom/faucets/wall-mount/vessel-lavatory-faucet-trim-only-to-v8502-9",
+      "no": "California Faucets Steampunk Bay wall-mount vessel lavatory faucet with lever handles and a 9 in spout in Oil Rubbed Bronze (TO-V8502-9-ORB $1,348.50 + VL-R in-wall rough $318.75 = about $1,667.25 STREET at Quality Bath; no CF list price found), 1.2 ",
       "url": "selection.html?p=41-montego&id=515"
     },
     {
@@ -549,6 +539,23 @@
       "url": "selection.html?p=41-montego&id=556"
     },
     {
+      "id": 557,
+      "pt": "Primary",
+      "st": "Proposed",
+      "tm": "PLD",
+      "ti": "Vessel Drain and Exposed Trap (bronze)",
+      "qt": 1,
+      "un": "EA",
+      "ld": 10,
+      "make": "California Faucets",
+      "mod": "9053L-ORB + 9076-ORB",
+      "fi": "Oil Rubbed Bronze (living finish)",
+      "co": "Cal Trim drains and traps",
+      "pu": "https://www.qualitybath.com/california-faucets-9053l-grid-strainer-drain-without-overflow-product-250887.htm",
+      "no": "California Faucets no-overflow grid strainer drain 9053L ($99.00 base + $39.75 ORB = $138.75) with an exposed 1-1/4 in P-trap 9076 ($168.75 + $67.50 ORB = $236.25) in Oil Rubbed Bronze, about $375.00 STREET at Quality Bath. Buying through CTW at 20% ",
+      "url": "selection.html?p=41-montego&id=557"
+    },
+    {
       "id": 591,
       "pt": "Primary",
       "st": "Proposed",
@@ -563,7 +570,7 @@
       "fi": "Oil Rubbed Bronze (living finish)",
       "co": "Steampunk Bay (85)",
       "pu": "https://www.calfaucets.com/bathroom/tub/tub-fillers/wall-mount/wall-mount-tub-filler-high-spout",
-      "no": "The tub spout / handheld diverter is built into the Steampunk Bay 8608-ETW.18-ORB tub filler (cost carried on the PTF row), so there is no separate tub diverter. VERIFIED on the spec sheet: 15 gpm spout, 1.8 gpm handshower. If Eric wants a separate t",
+      "no": "The tub spout / handheld diverter is built into the Steampunk Bay 8608-ETW.18-ORB tub filler (cost carried on the PTF row), so there is no separate tub diverter. Buying through CTW at 20% off; dealer quote from Kevin expected 2026-10-08 - replace the",
       "url": "selection.html?p=41-montego&id=591"
     },
     {
@@ -1885,6 +1892,25 @@
       "no": "SUPERSEDED - not the irregular fieldstone look Eric wants (reference photo 2026-10-07). Was: tumbled ivory travertine random-width strip mosaic, 12x12 mesh, 3/8in, $12.26/sf, shower-suitable when sealed.",
       "url": "selection.html?p=41-montego&id=589",
       "pp": 533
+    },
+    {
+      "id": 611,
+      "pt": "Alternative",
+      "st": "Disqualified",
+      "tm": "PDF",
+      "ti": "Lavatory Faucet - Single-Hole 8509-1 (deck-mount, superseded by wall-mount 2026-10-07)",
+      "qt": 1,
+      "un": "EA",
+      "ld": 10,
+      "make": "California Faucets",
+      "mod": "8509-1-ORB (widespread alt 8502-ORB)",
+      "img": "https://images.calfaucets.com/covers/_productThumb/8509-1-1.jpg",
+      "fi": "Oil Rubbed Bronze (living finish)",
+      "co": "Steampunk Bay (85)",
+      "pu": "https://images.calfaucets.com/technical/8509-1_sp.pdf",
+      "no": "SUPERSEDED - deck-mount faucet replaced by the wall-mount TO-V8502-9 on 2026-10-07. California Faucets Steampunk Bay single-hole lever lavatory faucet in Oil Rubbed Bronze, 1.2 gpm with a touch pop-up drain, price not captured (the BBU widespread 850",
+      "url": "selection.html?p=41-montego&id=611",
+      "pp": 515
     }
   ]
 }
