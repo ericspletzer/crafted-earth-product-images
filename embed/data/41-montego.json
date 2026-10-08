@@ -29,7 +29,7 @@
       "pt": "Primary",
       "st": "Placeholder",
       "tm": "PLV",
-      "ti": "Lavatory Sink - 30 in x 18 in vanity lav",
+      "ti": "Vessel Sink",
       "qt": 1,
       "un": "EA",
       "url": "selection.html?p=41-montego&id=556"
@@ -39,7 +39,7 @@
       "pt": "Primary",
       "st": "Placeholder",
       "tm": "PLD",
-      "ti": "Lav Drain, Trap and Stops (bronze)",
+      "ti": "Bottle Trap, Drain and Stops (bronze)",
       "qt": 1,
       "un": "EA",
       "url": "selection.html?p=41-montego&id=557"
@@ -65,34 +65,14 @@
       "url": "selection.html?p=41-montego&id=559"
     },
     {
-      "id": 560,
-      "pt": "Primary",
-      "st": "Placeholder",
-      "tm": "PSG",
-      "ti": "Shower Glass Panel and Hardware (bronze)",
-      "qt": 1,
-      "un": "EA",
-      "url": "selection.html?p=41-montego&id=560"
-    },
-    {
       "id": 561,
       "pt": "Primary",
       "st": "Placeholder",
       "tm": "CV1",
-      "ti": "Vanity Cabinet 30 in",
-      "qt": 1,
+      "ti": "Vanity - Two Live Edge Slabs (redwood or cedar)",
+      "qt": 2,
       "un": "EA",
       "url": "selection.html?p=41-montego&id=561"
-    },
-    {
-      "id": 562,
-      "pt": "Primary",
-      "st": "Placeholder",
-      "tm": "CT1",
-      "ti": "Vanity Countertop",
-      "qt": 1,
-      "un": "EA",
-      "url": "selection.html?p=41-montego&id=562"
     },
     {
       "id": 563,
@@ -325,6 +305,16 @@
       "url": "selection.html?p=41-montego&id=590"
     },
     {
+      "id": 597,
+      "pt": "Primary",
+      "st": "Placeholder",
+      "tm": "TP1",
+      "ti": "Plaster Finish - Shower Divider Wall (shower-rated, radius corner bead)",
+      "qt": 0,
+      "un": "SF",
+      "url": "selection.html?p=41-montego&id=597"
+    },
+    {
       "id": 497,
       "pt": "Primary",
       "st": "Proposed",
@@ -546,6 +536,26 @@
       "pu": "https://www.calfaucets.com/bathroom/tub/tub-fillers/wall-mount/wall-mount-tub-filler-high-spout",
       "no": "The tub spout / handheld diverter is built into the Steampunk Bay 8608-ETW.18-ORB tub filler (cost carried on the PTF row), so there is no separate tub diverter. VERIFIED on the spec sheet: 15 gpm spout, 1.8 gpm handshower. If Eric wants a separate t",
       "url": "selection.html?p=41-montego&id=591"
+    },
+    {
+      "id": 560,
+      "pt": "Primary",
+      "st": "Disqualified",
+      "tm": "PSG",
+      "ti": "Shower Glass Panel and Hardware (bronze)",
+      "qt": 1,
+      "un": "EA",
+      "url": "selection.html?p=41-montego&id=560"
+    },
+    {
+      "id": 562,
+      "pt": "Primary",
+      "st": "Disqualified",
+      "tm": "CT1",
+      "ti": "Vanity Countertop",
+      "qt": 1,
+      "un": "EA",
+      "url": "selection.html?p=41-montego&id=562"
     },
     {
       "id": 498,
